@@ -1,9 +1,0 @@
-#Visual Studio Configurations
-/.vs
-
-#Builds
-/build
-.obj
-.dll
-.exe
-.lib
