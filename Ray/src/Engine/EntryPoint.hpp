@@ -1,5 +1,5 @@
 #pragma once
-#include "Application.h"
+#include "Application.hpp"
 #include <iostream>
 #ifdef RAY_WINDOWS_PLATFORM
 

@@ -83,10 +83,10 @@
     <ClCompile Include="src\Engine\Application.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Engine\Application.h" />
-    <ClInclude Include="src\Engine\Core.h" />
-    <ClInclude Include="src\Engine\EntryPoint.h" />
-    <ClInclude Include="src\Ray.h" />
+    <ClInclude Include="src\Engine\Application.hpp" />
+    <ClInclude Include="src\Engine\Core.hpp" />
+    <ClInclude Include="src\Engine\EntryPoint.hpp" />
+    <ClInclude Include="src\Ray.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

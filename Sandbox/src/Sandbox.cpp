@@ -1,4 +1,4 @@
-#include <Ray.h>
+#include <Ray.hpp>
 
 class SandBox : public Ray::Application
 {
