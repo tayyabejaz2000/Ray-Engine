@@ -1,0 +1,9 @@
+#Visual Studio Configurations
+/.vs
+
+#Build
+/bin
+/bin-int
+.obj
+.lib
+.exe
