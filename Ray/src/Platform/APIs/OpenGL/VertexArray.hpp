@@ -1,13 +1,11 @@
-#pragma once
+#pragma
 
 #include "Core/Core.hpp"
-#include "Core/RayObject.hpp"
+#include "Renderer/VertexArray.hpp"
 
-#include "Renderer/Buffer.hpp"
-
-namespace Ray
+namespace Ray::OpenGL
 {
-    class VertexArray : public RayObject
+    class VertexArray : public Ray::VertexArray
     {
     public:
         VertexArray() = default;
