@@ -36,8 +36,8 @@ TARGETDIR = ../bin/Debug-linux-x86_64/RayUI
 TARGET = $(TARGETDIR)/RayUI
 OBJDIR = ../obj/Debug-linux-x86_64/RayUI
 DEFINES += -DRAY_DEBUG
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -g
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -g -std=c++17
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -g
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -g -std=c++17
 LIBS += ../bin/Debug-linux-x86_64/Ray/libRay.so ../Ray/vendor/GLFW/bin/Debug-linux-x86_64/GLFW/libGLFW.a ../Ray/vendor/glad/bin/Debug-linux-x86_64/glad/libglad.a -lGL -lpthread -lX11 -ldl
 LDDEPS += ../bin/Debug-linux-x86_64/Ray/libRay.so ../Ray/vendor/GLFW/bin/Debug-linux-x86_64/GLFW/libGLFW.a ../Ray/vendor/glad/bin/Debug-linux-x86_64/glad/libglad.a
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -Wl,-rpath,'$$ORIGIN/../Ray' -m64

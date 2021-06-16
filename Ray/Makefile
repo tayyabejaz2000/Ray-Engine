@@ -39,8 +39,8 @@ TARGETDIR = ../bin/Debug-linux-x86_64/Ray
 TARGET = $(TARGETDIR)/libRay.so
 OBJDIR = ../obj/Debug-linux-x86_64/Ray
 DEFINES += -DGLFW_INCLUDE_NONE -DRAY_DEBUG
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -fPIC -g
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -fPIC -g -std=c++17
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -fPIC -g
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -fPIC -g -std=c++17
 LIBS += vendor/GLFW/bin/Debug-linux-x86_64/GLFW/libGLFW.a vendor/glad/bin/Debug-linux-x86_64/glad/libglad.a -lGL -lpthread -lX11 -ldl
 LDDEPS += vendor/GLFW/bin/Debug-linux-x86_64/GLFW/libGLFW.a vendor/glad/bin/Debug-linux-x86_64/glad/libglad.a
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64 -shared -Wl,-soname=libRay.so
@@ -70,16 +70,26 @@ OBJECTS :=
 
 GENERATED += $(OBJDIR)/Application.o
 GENERATED += $(OBJDIR)/ApplicationLayer.o
+GENERATED += $(OBJDIR)/Buffer.o
 GENERATED += $(OBJDIR)/EventDispatcher.o
+GENERATED += $(OBJDIR)/IndexBuffer.o
 GENERATED += $(OBJDIR)/LayerStack.o
 GENERATED += $(OBJDIR)/LinuxWindow.o
+GENERATED += $(OBJDIR)/Renderer.o
+GENERATED += $(OBJDIR)/VertexArray.o
+GENERATED += $(OBJDIR)/VertexBuffer.o
 GENERATED += $(OBJDIR)/Window.o
 GENERATED += $(OBJDIR)/raypch.o
 OBJECTS += $(OBJDIR)/Application.o
 OBJECTS += $(OBJDIR)/ApplicationLayer.o
+OBJECTS += $(OBJDIR)/Buffer.o
 OBJECTS += $(OBJDIR)/EventDispatcher.o
+OBJECTS += $(OBJDIR)/IndexBuffer.o
 OBJECTS += $(OBJDIR)/LayerStack.o
 OBJECTS += $(OBJDIR)/LinuxWindow.o
+OBJECTS += $(OBJDIR)/Renderer.o
+OBJECTS += $(OBJDIR)/VertexArray.o
+OBJECTS += $(OBJDIR)/VertexBuffer.o
 OBJECTS += $(OBJDIR)/Window.o
 OBJECTS += $(OBJDIR)/raypch.o
 
@@ -160,7 +170,22 @@ $(OBJDIR)/EventDispatcher.o: src/Events/EventDispatcher.cpp
 $(OBJDIR)/ApplicationLayer.o: src/Layers/ApplicationLayer.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/IndexBuffer.o: src/Platform/APIs/OpenGL/IndexBuffer.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/VertexBuffer.o: src/Platform/APIs/OpenGL/VertexBuffer.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/LinuxWindow.o: src/Platform/Linux/LinuxWindow.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Buffer.o: src/Renderer/Buffer.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Renderer.o: src/Renderer/Renderer.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/VertexArray.o: src/Renderer/VertexArray.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/raypch.o: src/raypch.cpp
