@@ -25,9 +25,9 @@ namespace Ray
         void OnEvent(WindowResizeEvent &);
         void OnEvent(WindowCloseEvent &);
 
-        inline Object<Window> &GetWindow() { return m_Window; }
+        inline Window &GetWindow() { return *m_Window; }
 
-        static const Application *GetApplication();
+        static Application &GetApplication();
 
         friend int main(int argc, char **argv, char **envp);
 

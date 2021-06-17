@@ -5,7 +5,7 @@
 
 namespace Ray
 {
-    Application *Application::s_Application(nullptr);
+    Application *Application::s_Application = nullptr;
 
     Application::Application(const std::string_view &windowName) : m_running(false), m_minimized(false)
     {
@@ -27,7 +27,6 @@ namespace Ray
     }
     Application::~Application()
     {
-        m_Window.reset(nullptr);
         s_Application = nullptr;
     }
     void Application::Run()
@@ -45,7 +44,7 @@ namespace Ray
                 LayerStack::OnUpdate(deltaTime);
             }
 
-            m_Window->OnUpdate();
+            GetWindow().OnUpdate();
         }
     }
 
@@ -57,21 +56,21 @@ namespace Ray
 
     void Application::OnEvent(WindowResizeEvent &e)
     {
-        m_Window->GetSpecifications().width = e.width;
-        m_Window->GetSpecifications().height = e.height;
+        GetWindow().GetSpecifications().width = e.width;
+        GetWindow().GetSpecifications().height = e.height;
         m_minimized = false;
         e.handled = true;
     }
 
     void Application::OnEvent(WindowCloseEvent &e)
     {
-        LayerStack::OnDetach();
         m_running = false;
         e.handled = true;
+        LayerStack::OnDetach();
     }
 
-    const Application *Application::GetApplication()
+    Application &Application::GetApplication()
     {
-        return s_Application;
+        return *s_Application;
     }
 }

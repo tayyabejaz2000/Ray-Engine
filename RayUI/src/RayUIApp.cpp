@@ -10,7 +10,7 @@ namespace Ray
     public:
         RayUIApp() : Application("Ray Engine")
         {
-            Application::GetApplication()->PushLayer(CreateRef<EditorLayer>());
+            Application::GetApplication().PushLayer(CreateRef<EditorLayer>());
         }
         ~RayUIApp()
         {

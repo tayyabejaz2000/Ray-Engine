@@ -23,7 +23,7 @@ namespace Ray
         void Dispatch(WindowMinimizeEvent &) const;
         void Dispatch(WindowCloseEvent &) const;
 
-        static inline constexpr const EventDispatcher *GetEventDispatcher() { return s_singletonInstance; }
+        static inline const EventDispatcher *GetEventDispatcher() { return s_singletonInstance; }
 
     private:
         static EventDispatcher *s_singletonInstance;
