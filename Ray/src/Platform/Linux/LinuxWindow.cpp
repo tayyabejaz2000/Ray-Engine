@@ -84,8 +84,7 @@ namespace Ray
     }
     void LinuxWindow::OnUpdate()
     {
-        //Swap Buffers
-        glfwSwapBuffers(m_windowHandle);
+        m_context->SwapBuffers();
         glfwPollEvents();
     }
     bool LinuxWindow::IsRunning()
@@ -99,10 +98,7 @@ namespace Ray
     void LinuxWindow::InitGLFW()
     {
         if (!glfwInit())
-        {
-            //TODO: Logging
             throw std::runtime_error("Failed to Initialize GLFW");
-        }
     }
     void LinuxWindow::Init(const WindowSpecifications &specs)
     {
@@ -129,14 +125,8 @@ namespace Ray
             nullptr,              //Monitor to display the window (nullptr in this case)
             nullptr);             //Parent for current Window (nullptr in this case)
 
-        //Move to Context//////////
-        glfwMakeContextCurrent(m_windowHandle);
-        auto status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        if (!status)
-            //TODO: Logging
-            throw std::runtime_error("Failed to initialize GLAD");
-        std::cout << "OpenGL Version: " << GLVersion.major << '.' << GLVersion.minor << '\n';
-        ///////////////////////////
+        m_context = GraphicsContext::Create(m_windowHandle);
+        m_context->Init();
 
         if (glfwRawMouseMotionSupported())
             glfwSetInputMode(m_windowHandle, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);

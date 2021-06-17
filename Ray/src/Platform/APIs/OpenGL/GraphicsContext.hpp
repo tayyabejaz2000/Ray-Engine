@@ -8,7 +8,9 @@ namespace Ray::OpenGL
 {
     class RAYAPI GraphicsContext : public Ray::GraphicsContext
     {
-        GraphicsContext(GLFWwindow *);
+    public:
+        GraphicsContext(void *);
+        virtual ~GraphicsContext();
 
         virtual void Init() override;
         virtual void SwapBuffers() override;

@@ -1,9 +1,12 @@
 #pragma once
 
+#include <GLFW/glfw3.h>
+
 #include "Core/Core.hpp"
 #include "Core/Window.hpp"
 #include "Core/LayerStack.hpp"
-#include <GLFW/glfw3.h>
+
+#include "Renderer/GraphicsContext.hpp"
 
 namespace Ray
 {
@@ -27,5 +30,6 @@ namespace Ray
 
     private:
         WindowHandle *m_windowHandle;
+        Object<GraphicsContext> m_context;
     };
 }

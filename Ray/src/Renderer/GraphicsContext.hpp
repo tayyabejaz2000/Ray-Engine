@@ -14,6 +14,7 @@ namespace Ray
         virtual void Init() = 0;
         virtual void SwapBuffers() = 0;
 
+    public:
         static Object<GraphicsContext> Create(void *);
     };
 }

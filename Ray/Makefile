@@ -73,6 +73,7 @@ GENERATED += $(OBJDIR)/ApplicationLayer.o
 GENERATED += $(OBJDIR)/Buffer.o
 GENERATED += $(OBJDIR)/EventDispatcher.o
 GENERATED += $(OBJDIR)/GraphicsContext.o
+GENERATED += $(OBJDIR)/GraphicsContext1.o
 GENERATED += $(OBJDIR)/IndexBuffer.o
 GENERATED += $(OBJDIR)/LayerStack.o
 GENERATED += $(OBJDIR)/LinuxWindow.o
@@ -87,6 +88,7 @@ OBJECTS += $(OBJDIR)/ApplicationLayer.o
 OBJECTS += $(OBJDIR)/Buffer.o
 OBJECTS += $(OBJDIR)/EventDispatcher.o
 OBJECTS += $(OBJDIR)/GraphicsContext.o
+OBJECTS += $(OBJDIR)/GraphicsContext1.o
 OBJECTS += $(OBJDIR)/IndexBuffer.o
 OBJECTS += $(OBJDIR)/LayerStack.o
 OBJECTS += $(OBJDIR)/LinuxWindow.o
@@ -174,6 +176,9 @@ $(OBJDIR)/EventDispatcher.o: src/Events/EventDispatcher.cpp
 $(OBJDIR)/ApplicationLayer.o: src/Layers/ApplicationLayer.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/GraphicsContext.o: src/Platform/APIs/OpenGL/GraphicsContext.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/IndexBuffer.o: src/Platform/APIs/OpenGL/IndexBuffer.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
@@ -189,7 +194,7 @@ $(OBJDIR)/LinuxWindow.o: src/Platform/Linux/LinuxWindow.cpp
 $(OBJDIR)/Buffer.o: src/Renderer/Buffer.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/GraphicsContext.o: src/Renderer/GraphicsContext.cpp
+$(OBJDIR)/GraphicsContext1.o: src/Renderer/GraphicsContext.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Renderer.o: src/Renderer/Renderer.cpp
