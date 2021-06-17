@@ -5,20 +5,17 @@
 
 namespace Ray::OpenGL
 {
-    class VertexArray : public Ray::VertexArray
+    class RAYAPI VertexArray : public Ray::VertexArray
     {
     public:
-        VertexArray() = default;
-        virtual ~VertexArray() = default;
+        VertexArray();
+        virtual ~VertexArray();
 
-        virtual void Bind() const override = 0;
-        virtual void Unbind() const override = 0;
+        virtual void Bind() const override;
+        virtual void Unbind() const override;
 
-        virtual void AddVertexBuffer(const Ref<VertexBuffer> &) = 0;
-        virtual void SetIndexBuffer(const Ref<IndexBuffer> &) = 0;
-
-    public:
-        static Ref<VertexArray> Create();
+        virtual void AddVertexBuffer(const Ref<Ray::VertexBuffer> &) override;
+        virtual void SetIndexBuffer(const Ref<Ray::IndexBuffer> &) override;
 
     private:
         uid_t m_rendererID;

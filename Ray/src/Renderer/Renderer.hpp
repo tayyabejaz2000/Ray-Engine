@@ -5,7 +5,7 @@
 
 namespace Ray
 {
-    class Renderer : public RayObject
+    class RAYAPI Renderer : public RayObject
     {
     public:
         Renderer();

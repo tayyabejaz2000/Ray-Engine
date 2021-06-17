@@ -7,7 +7,7 @@
 
 namespace Ray
 {
-    class VertexArray : public RayObject
+    class RAYAPI VertexArray : public RayObject
     {
     public:
         VertexArray() = default;

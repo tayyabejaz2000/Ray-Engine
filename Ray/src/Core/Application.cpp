@@ -5,12 +5,12 @@
 
 namespace Ray
 {
-    Observer<Application> Application::s_Application(nullptr);
+    Application *Application::s_Application(nullptr);
 
     Application::Application(const std::string_view &windowName) : m_running(false), m_minimized(false)
     {
         if (!s_Application)
-            s_Application = CreateObserver(this);
+            s_Application = this;
         else
             throw std::runtime_error("Application already created");
 
@@ -70,7 +70,7 @@ namespace Ray
         e.handled = true;
     }
 
-    const Observer<Application> &Application::GetApplication()
+    const Application *Application::GetApplication()
     {
         return s_Application;
     }

@@ -24,7 +24,7 @@ namespace Ray::OpenGL
         glBindVertexArray(0);
     }
 
-    void VertexArray::AddVertexBuffer(const Ref<VertexBuffer> &buffer)
+    void VertexArray::AddVertexBuffer(const Ref<Ray::VertexBuffer> &buffer)
     {
         const auto &layout = buffer->GetLayout();
 
@@ -71,7 +71,7 @@ namespace Ray::OpenGL
         m_vertexBuffers.push_back(buffer);
     }
 
-    void VertexArray::SetIndexBuffer(const Ref<IndexBuffer> &buffer)
+    void VertexArray::SetIndexBuffer(const Ref<Ray::IndexBuffer> &buffer)
     {
         glBindVertexArray(m_rendererID);
         buffer->Bind();

@@ -2,7 +2,7 @@
 
 namespace Ray
 {
-    Observer<EventDispatcher> EventDispatcher::s_singletonInstance;
+    EventDispatcher *EventDispatcher::s_singletonInstance;
 
     EventDispatcher::EventDispatcher()
     {
@@ -10,7 +10,7 @@ namespace Ray
             throw std::runtime_error("Event Dispatcher already Initialized");
         else
         {
-            s_singletonInstance = CreateObserver<EventDispatcher>(this);
+            s_singletonInstance = this;
         }
     }
     EventDispatcher::~EventDispatcher()

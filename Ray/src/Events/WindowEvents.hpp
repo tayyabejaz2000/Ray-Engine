@@ -30,13 +30,14 @@ namespace Ray
     {
     public:
         WindowResizeEvent(uint16_t w, uint16_t h) : WindowEvent(), width(w), height(h) {}
-        const uint16_t& GetWindowWidth() const { return width; }
-        const uint16_t& GetWindowHeight() const { return height; }
+        const uint16_t &GetWindowWidth() const { return width; }
+        const uint16_t &GetWindowHeight() const { return height; }
         virtual const EventType GetEventType() const override { return EventType::WINDOW_RESIZE_EVENT; }
         virtual std::string ToString() const override
         {
             return "Window Resize Event";
         }
+
     public:
         const uint16_t width, height;
     };

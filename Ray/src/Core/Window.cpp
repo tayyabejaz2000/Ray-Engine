@@ -12,7 +12,7 @@ namespace Ray
     Window::Window(const WindowSpecifications &specs) : m_specs(specs)
     {
         if (!s_Window)
-            s_Window = CreateObserver<Window>(this);
+            s_Window = this;
         else
             throw std::runtime_error("Window Already created");
     }

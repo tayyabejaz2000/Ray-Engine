@@ -272,15 +272,15 @@ namespace Ray
       [GLFW_MOD_SUPER >> 1] = KeyModifier::ALT,
   };
 
-  inline const Key RayKeyCast(int32_t glfw_key)
+  inline const Key RAYAPI RayKeyCast(int32_t glfw_key)
   {
     return (const Key)((glfw_key == GLFW_KEY_UNKNOWN) ? Key::KEY_UNKNOWN : GLFW_Key_Codes[glfw_key - ((glfw_key > 255) ? 125 : 32)]);
   }
-  inline const KeyModifier RayKeyModifierCast(int32_t glfw_mod)
+  inline const KeyModifier RAYAPI RayKeyModifierCast(int32_t glfw_mod)
   {
     return (const KeyModifier)((glfw_mod == 0) ? KeyModifier::NO_MODIFIER : GLFW_Key_Mods[glfw_mod >> 1]);
   }
-  inline const MouseButton RayMouseButtonCast(int32_t glfw_mouse_button)
+  inline const MouseButton RAYAPI RayMouseButtonCast(int32_t glfw_mouse_button)
   {
     return (const MouseButton)GLFW_Mouse_Codes[glfw_mouse_button];
   }

@@ -6,7 +6,7 @@
 namespace Ray
 {
     ///TODO: Move to Graphics API Specific Implementation
-    enum class ShaderDatatype : uint8_t
+    enum class RAYAPI ShaderDatatype : uint8_t
     {
         //Single Values
 
@@ -59,7 +59,7 @@ namespace Ray
         Mat4,   //4x4 Matrix floating values
     };
 
-    struct VertexBufferLayoutElement
+    struct RAYAPI VertexBufferLayoutElement
     {
         std::string name;
         ShaderDatatype type;
@@ -68,7 +68,7 @@ namespace Ray
 
     using VertexBufferLayout = std::vector<VertexBufferLayoutElement>;
 
-    class VertexBuffer : public RayObject
+    class RAYAPI VertexBuffer : public RayObject
     {
     public:
         VertexBuffer() = default;
@@ -84,10 +84,11 @@ namespace Ray
         virtual void GetData(void *, std::size_t) const = 0;
 
     public:
-        static Ref<VertexBuffer> Create();
+        static Ref<VertexBuffer> Create(std::size_t);
+        static Ref<VertexBuffer> Create(void *, std::size_t);
     };
 
-    class IndexBuffer : public RayObject
+    class RAYAPI IndexBuffer : public RayObject
     {
     public:
         IndexBuffer() = default;
@@ -100,6 +101,6 @@ namespace Ray
         virtual void GetIndices(void *, std::size_t) const = 0;
 
     public:
-        static Ref<IndexBuffer> Create();
+        static Ref<IndexBuffer> Create(void *, std::size_t);
     };
 }

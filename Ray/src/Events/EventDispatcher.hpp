@@ -23,9 +23,9 @@ namespace Ray
         void Dispatch(WindowMinimizeEvent &) const;
         void Dispatch(WindowCloseEvent &) const;
 
-        static inline constexpr const Observer<EventDispatcher> &GetEventDispatcher() { return s_singletonInstance; }
+        static inline constexpr const EventDispatcher *GetEventDispatcher() { return s_singletonInstance; }
 
     private:
-        static Observer<EventDispatcher> s_singletonInstance;
+        static EventDispatcher *s_singletonInstance;
     };
 }

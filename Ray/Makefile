@@ -77,6 +77,7 @@ GENERATED += $(OBJDIR)/LayerStack.o
 GENERATED += $(OBJDIR)/LinuxWindow.o
 GENERATED += $(OBJDIR)/Renderer.o
 GENERATED += $(OBJDIR)/VertexArray.o
+GENERATED += $(OBJDIR)/VertexArray1.o
 GENERATED += $(OBJDIR)/VertexBuffer.o
 GENERATED += $(OBJDIR)/Window.o
 GENERATED += $(OBJDIR)/raypch.o
@@ -89,6 +90,7 @@ OBJECTS += $(OBJDIR)/LayerStack.o
 OBJECTS += $(OBJDIR)/LinuxWindow.o
 OBJECTS += $(OBJDIR)/Renderer.o
 OBJECTS += $(OBJDIR)/VertexArray.o
+OBJECTS += $(OBJDIR)/VertexArray1.o
 OBJECTS += $(OBJDIR)/VertexBuffer.o
 OBJECTS += $(OBJDIR)/Window.o
 OBJECTS += $(OBJDIR)/raypch.o
@@ -173,6 +175,9 @@ $(OBJDIR)/ApplicationLayer.o: src/Layers/ApplicationLayer.cpp
 $(OBJDIR)/IndexBuffer.o: src/Platform/APIs/OpenGL/IndexBuffer.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/VertexArray.o: src/Platform/APIs/OpenGL/VertexArray.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/VertexBuffer.o: src/Platform/APIs/OpenGL/VertexBuffer.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
@@ -185,7 +190,7 @@ $(OBJDIR)/Buffer.o: src/Renderer/Buffer.cpp
 $(OBJDIR)/Renderer.o: src/Renderer/Renderer.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/VertexArray.o: src/Renderer/VertexArray.cpp
+$(OBJDIR)/VertexArray1.o: src/Renderer/VertexArray.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/raypch.o: src/raypch.cpp

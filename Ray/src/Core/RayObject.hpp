@@ -4,7 +4,7 @@
 
 namespace Ray
 {
-    class RayObject
+    class RAYAPI RayObject
     {
     public:
         virtual std::string ToString() { return "Ray Object"; }

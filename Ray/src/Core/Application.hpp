@@ -27,14 +27,14 @@ namespace Ray
 
         inline Object<Window> &GetWindow() { return m_Window; }
 
-        static const Observer<Application> &GetApplication();
+        static const Application *GetApplication();
 
         friend int main(int argc, char **argv, char **envp);
 
     private:
         bool m_running, m_minimized;
         Object<Window> m_Window;
-        static Observer<Application> s_Application;
+        static Application *s_Application;
     };
     Object<Application> CreateApplication();
 }

@@ -10,13 +10,13 @@
 
 namespace Ray
 {
-    void GLDebugProc(uint32_t source,
-                     uint32_t type,
-                     uint32_t id,
-                     uint32_t severity,
-                     int length,
-                     const char *message,
-                     const void *userParam)
+    void RAYAPI GLDebugProc(uint32_t source,
+                            uint32_t type,
+                            uint32_t id,
+                            uint32_t severity,
+                            int length,
+                            const char *message,
+                            const void *userParam)
     {
         std::cout << "---------------------opengl-callback-start---------------------\n";
         std::cout << "message: " << message << '\n';
@@ -85,16 +85,16 @@ namespace Ray
     void LinuxWindow::OnUpdate()
     {
         //Swap Buffers
-        glfwSwapBuffers(m_windowHandle.get());
+        glfwSwapBuffers(m_windowHandle);
         glfwPollEvents();
     }
     bool LinuxWindow::IsRunning()
     {
-        return !(glfwWindowShouldClose(m_windowHandle.get()));
+        return !(glfwWindowShouldClose(m_windowHandle));
     }
-    Observer<void> LinuxWindow::GetNativeWindowHandle()
+    void *LinuxWindow::GetNativeWindowHandle()
     {
-        return CreateObserver<void>(reinterpret_cast<void *>(m_windowHandle.get()));
+        return reinterpret_cast<void *>(m_windowHandle);
     }
     void LinuxWindow::InitGLFW()
     {
@@ -122,17 +122,15 @@ namespace Ray
             glDebugMessageCallback(GLDebugProc, NULL);
 #endif
 
-        auto windowHandle = glfwCreateWindow(
+        m_windowHandle = glfwCreateWindow(
             m_specs.width,        //Width of Window
             m_specs.height,       //Height of Window
             m_specs.title.data(), //Title of Window
             nullptr,              //Monitor to display the window (nullptr in this case)
             nullptr);             //Parent for current Window (nullptr in this case)
 
-        m_windowHandle = CreateObserver(windowHandle);
-
         //Move to Context//////////
-        glfwMakeContextCurrent(windowHandle);
+        glfwMakeContextCurrent(m_windowHandle);
         auto status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
         if (!status)
             //TODO: Logging
@@ -141,9 +139,9 @@ namespace Ray
         ///////////////////////////
 
         if (glfwRawMouseMotionSupported())
-            glfwSetInputMode(windowHandle, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+            glfwSetInputMode(m_windowHandle, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 
-        glfwSetKeyCallback(windowHandle, [](GLFWwindow *window, int key, int scancode, int action, int mods)
+        glfwSetKeyCallback(m_windowHandle, [](GLFWwindow *window, int key, int scancode, int action, int mods)
                            {
                                switch (action)
                                {
@@ -168,13 +166,13 @@ namespace Ray
                                };
                            });
 
-        glfwSetCharCallback(windowHandle, [](GLFWwindow *window, uint scancode)
+        glfwSetCharCallback(m_windowHandle, [](GLFWwindow *window, uint scancode)
                             {
                                 KeyTypedEvent e(scancode);
                                 EventDispatcher::GetEventDispatcher()->Dispatch(e);
                             });
 
-        glfwSetMouseButtonCallback(windowHandle, [](GLFWwindow *window, int button, int action, int mods)
+        glfwSetMouseButtonCallback(m_windowHandle, [](GLFWwindow *window, int button, int action, int mods)
                                    {
                                        double x, y;
                                        glfwGetCursorPos(window, &x, &y);
@@ -190,7 +188,7 @@ namespace Ray
                                            EventDispatcher::GetEventDispatcher()->Dispatch(e);
                                        }
                                    });
-        glfwSetScrollCallback(windowHandle, [](GLFWwindow *window, double xOffset, double yOffset)
+        glfwSetScrollCallback(m_windowHandle, [](GLFWwindow *window, double xOffset, double yOffset)
                               {
                                   double x, y;
                                   glfwGetCursorPos(window, &x, &y);
@@ -200,7 +198,7 @@ namespace Ray
                                   EventDispatcher::GetEventDispatcher()->Dispatch(e);
                               });
 
-        glfwSetWindowSizeCallback(windowHandle, [](GLFWwindow *window, int width, int height)
+        glfwSetWindowSizeCallback(m_windowHandle, [](GLFWwindow *window, int width, int height)
                                   {
                                       if (width & height == 0)
                                       {
@@ -214,7 +212,7 @@ namespace Ray
                                       }
                                   });
 
-        glfwSetWindowCloseCallback(windowHandle, [](GLFWwindow *window)
+        glfwSetWindowCloseCallback(m_windowHandle, [](GLFWwindow *window)
                                    {
                                        WindowCloseEvent e;
                                        EventDispatcher::GetEventDispatcher()->Dispatch(e);
@@ -226,8 +224,8 @@ namespace Ray
     {
         if (m_windowHandle)
         {
-            glfwDestroyWindow(m_windowHandle.get());
-            m_windowHandle.release();
+            glfwDestroyWindow(m_windowHandle);
+            m_windowHandle = nullptr;
         }
     }
 }

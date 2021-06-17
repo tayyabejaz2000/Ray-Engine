@@ -19,12 +19,12 @@ namespace Ray
         virtual void VSync(bool) = 0;
         virtual void OnUpdate() = 0;
         virtual bool IsRunning() = 0;
-        virtual Observer<void> GetNativeWindowHandle() = 0;
+        virtual void *GetNativeWindowHandle() = 0;
 
         static Object<Window> Create(const WindowSpecifications &);
 
     private:
-        Observer<Window> s_Window;
+        Window *s_Window;
 
     protected:
         WindowSpecifications m_specs;

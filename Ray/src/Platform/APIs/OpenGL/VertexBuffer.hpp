@@ -2,9 +2,9 @@
 
 namespace Ray::OpenGL
 {
-    uint32_t GetStride(const VertexBufferLayout &);
+    uint32_t RAYAPI GetStride(const VertexBufferLayout &);
 
-    class ShaderDatatypeResolver
+    class RAYAPI ShaderDatatypeResolver
     {
     private:
         static uint32_t s_TypeLookup[];
@@ -21,7 +21,7 @@ namespace Ray::OpenGL
         }
     };
 
-    class VertexBuffer : public Ray::VertexBuffer
+    class RAYAPI VertexBuffer : public Ray::VertexBuffer
     {
     public:
         VertexBuffer(std::size_t);

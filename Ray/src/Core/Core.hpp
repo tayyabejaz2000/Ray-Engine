@@ -28,8 +28,6 @@ namespace Ray
     using Object = std::unique_ptr<T>;
     template <class T>
     using Ref = std::shared_ptr<T>;
-    template <class T>
-    using Observer = std::experimental::observer_ptr<T>;
 
     template <class T, class... Args>
     constexpr Object<T> CreateObject(Args &&...args)
@@ -40,20 +38,5 @@ namespace Ray
     constexpr Ref<T> CreateRef(Args &&...args)
     {
         return std::make_shared<T>(std::forward<Args>(args)...);
-    }
-    template <class T>
-    constexpr Observer<T> CreateObserver(T* val)
-    {
-        return std::experimental::make_observer(val);
-    }
-    template <class T>
-    constexpr Observer<T> CreateObserver(Object<T>&& val)
-    {
-        return std::experimental::make_observer(val.get());
-    }
-    template <class T>
-    constexpr Observer<T> CreateObserver(Ref<T>&& val)
-    {
-        return std::experimental::make_observer(val.get());
     }
 }

@@ -17,7 +17,7 @@ namespace Ray
         virtual void VSync(bool) override;
         virtual void OnUpdate() override;
         virtual bool IsRunning() override;
-        virtual Observer<void> GetNativeWindowHandle() override;
+        virtual void *GetNativeWindowHandle() override;
 
     private:
         void InitGLFW();
@@ -26,6 +26,6 @@ namespace Ray
         virtual void Shutdown();
 
     private:
-        Observer<WindowHandle> m_windowHandle;
+        WindowHandle *m_windowHandle;
     };
 }
