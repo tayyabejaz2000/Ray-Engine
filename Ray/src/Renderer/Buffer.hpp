@@ -10,36 +10,36 @@ namespace Ray
     {
         //Single Values
 
-        Int,  //32-bit Integer
-        Uint, //32-bit Unsigned Integer
-        //Bool,         //8-bit boolean with 2 possible values (true/false)
+        Int,    //32-bit Integer
+        Uint,   //32-bit Unsigned Integer
+        Bool,   //8-bit boolean with 2 possible values (true/false)
         Half,   //16-bit half precision floating value
         Float,  //32-bit standard floating value
         Double, //64-bit high precision floating value
 
         //Vec2 Values
 
-        Int2,  //32-bit Integer (vec2)
-        Uint2, //32-bit Unsigned Integer (vec2)
-        //Bool2,         //8-bit boolean with 2 possible values (true/false) (vec2)
+        Int2,    //32-bit Integer (vec2)
+        Uint2,   //32-bit Unsigned Integer (vec2)
+        Bool2,   //8-bit boolean with 2 possible values (true/false) (vec2)
         Half2,   //16-bit half precision floating value (vec2)
         Float2,  //32-bit standard floating value (vec2)
         Double2, //64-bit high precision floating value (vec2)
 
         //Vec3 Values
 
-        Int3,  //32-bit Integer (vec3)
-        Uint3, //32-bit Unsigned Integer (vec3)
-        //Bool3,         //8-bit boolean with 2 possible values (true/false) (vec3)
+        Int3,    //32-bit Integer (vec3)
+        Uint3,   //32-bit Unsigned Integer (vec3)
+        Bool3,   //8-bit boolean with 2 possible values (true/false) (vec3)
         Half3,   //16-bit half precision floating value (vec3)
         Float3,  //32-bit standard floating value (vec3)
         Double3, //64-bit high precision floating value (vec3)
 
         //Vec4 Values
 
-        Int4,  //32-bit Integer (vec4)
-        Uint4, //32-bit Unsigned Integer (vec4)
-        //Bool4,         //8-bit boolean with 2 possible values (true/false) (vec4)
+        Int4,    //32-bit Integer (vec4)
+        Uint4,   //32-bit Unsigned Integer (vec4)
+        Bool4,   //8-bit boolean with 2 possible values (true/false) (vec4)
         Half4,   //16-bit half precision floating value (vec4)
         Float4,  //32-bit standard floating value (vec4)
         Double4, //64-bit high precision floating value (vec4)

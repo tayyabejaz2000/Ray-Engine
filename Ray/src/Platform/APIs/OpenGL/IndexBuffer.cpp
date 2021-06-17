@@ -7,8 +7,7 @@ namespace Ray::OpenGL
     IndexBuffer::IndexBuffer(void *indices, std::size_t bufferSize)
     {
         glCreateBuffers(1, &m_rendererID);
-        glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
-        glBufferData(GL_ARRAY_BUFFER, bufferSize * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+        SetIndices(indices, bufferSize);
     }
     IndexBuffer::~IndexBuffer()
     {

@@ -7,24 +7,28 @@ namespace Ray::OpenGL
     uint32_t ShaderDatatypeResolver::s_TypeLookup[] = {
         [(uint32_t)ShaderDatatype::Int] = GL_INT,
         [(uint32_t)ShaderDatatype::Uint] = GL_UNSIGNED_INT,
+        [(uint32_t)ShaderDatatype::Bool] = GL_BOOL,
         [(uint32_t)ShaderDatatype::Half] = GL_HALF_FLOAT,
         [(uint32_t)ShaderDatatype::Float] = GL_FLOAT,
         [(uint32_t)ShaderDatatype::Double] = GL_DOUBLE,
 
         [(uint32_t)ShaderDatatype::Int2] = GL_INT,
         [(uint32_t)ShaderDatatype::Uint2] = GL_UNSIGNED_INT,
+        [(uint32_t)ShaderDatatype::Bool2] = GL_BOOL,
         [(uint32_t)ShaderDatatype::Half2] = GL_HALF_FLOAT,
         [(uint32_t)ShaderDatatype::Float2] = GL_FLOAT,
         [(uint32_t)ShaderDatatype::Double2] = GL_DOUBLE,
 
         [(uint32_t)ShaderDatatype::Int3] = GL_INT,
         [(uint32_t)ShaderDatatype::Uint3] = GL_UNSIGNED_INT,
+        [(uint32_t)ShaderDatatype::Bool3] = GL_BOOL,
         [(uint32_t)ShaderDatatype::Half3] = GL_HALF_FLOAT,
         [(uint32_t)ShaderDatatype::Float3] = GL_FLOAT,
         [(uint32_t)ShaderDatatype::Double3] = GL_DOUBLE,
 
         [(uint32_t)ShaderDatatype::Int4] = GL_INT,
         [(uint32_t)ShaderDatatype::Uint4] = GL_UNSIGNED_INT,
+        [(uint32_t)ShaderDatatype::Bool4] = GL_BOOL,
         [(uint32_t)ShaderDatatype::Half4] = GL_HALF_FLOAT,
         [(uint32_t)ShaderDatatype::Float4] = GL_FLOAT,
         [(uint32_t)ShaderDatatype::Double4] = GL_DOUBLE,
@@ -44,24 +48,28 @@ namespace Ray::OpenGL
     uint8_t ShaderDatatypeResolver::s_SizeLookup[] = {
         [(uint32_t)ShaderDatatype::Int] = 1,
         [(uint32_t)ShaderDatatype::Uint] = 1,
+        [(uint32_t)ShaderDatatype::Bool] = 1,
         [(uint32_t)ShaderDatatype::Half] = 1,
         [(uint32_t)ShaderDatatype::Float] = 1,
         [(uint32_t)ShaderDatatype::Double] = 1,
 
         [(uint32_t)ShaderDatatype::Int2] = 2,
         [(uint32_t)ShaderDatatype::Uint2] = 2,
+        [(uint32_t)ShaderDatatype::Bool2] = 2,
         [(uint32_t)ShaderDatatype::Half2] = 2,
         [(uint32_t)ShaderDatatype::Float2] = 2,
         [(uint32_t)ShaderDatatype::Double2] = 2,
 
         [(uint32_t)ShaderDatatype::Int3] = 3,
         [(uint32_t)ShaderDatatype::Uint3] = 3,
+        [(uint32_t)ShaderDatatype::Bool3] = 3,
         [(uint32_t)ShaderDatatype::Half3] = 3,
         [(uint32_t)ShaderDatatype::Float3] = 3,
         [(uint32_t)ShaderDatatype::Double3] = 3,
 
         [(uint32_t)ShaderDatatype::Int4] = 4,
         [(uint32_t)ShaderDatatype::Uint4] = 4,
+        [(uint32_t)ShaderDatatype::Bool4] = 4,
         [(uint32_t)ShaderDatatype::Half4] = 4,
         [(uint32_t)ShaderDatatype::Float4] = 4,
         [(uint32_t)ShaderDatatype::Double4] = 4,
@@ -116,5 +124,13 @@ namespace Ray::OpenGL
     {
         glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
         glGetBufferSubData(GL_ARRAY_BUFFER, 0, bufferSize, data);
+    }
+
+    uint32_t GetStride(const VertexBufferLayout &layout)
+    {
+        auto stride = 0u;
+        for (auto &elem : layout)
+            stride += ShaderDatatypeResolver::GetSize(elem.type);
+        return stride;
     }
 }

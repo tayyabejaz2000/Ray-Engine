@@ -11,13 +11,17 @@ namespace Ray::OpenGL
         VertexArray() = default;
         virtual ~VertexArray() = default;
 
-        virtual void Bind() = 0;
-        virtual void Unbind() = 0;
+        virtual void Bind() const override = 0;
+        virtual void Unbind() const override = 0;
 
         virtual void AddVertexBuffer(const Ref<VertexBuffer> &) = 0;
         virtual void SetIndexBuffer(const Ref<IndexBuffer> &) = 0;
 
     public:
         static Ref<VertexArray> Create();
+
+    private:
+        uid_t m_rendererID;
+        uint32_t m_vertexBufferIndex;
     };
 }
