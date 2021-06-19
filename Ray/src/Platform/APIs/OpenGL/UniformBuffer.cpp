@@ -12,7 +12,7 @@ namespace Ray::OpenGL
         for (auto &layoutElem : m_layout)
         {
             layoutElem.offset = offset;
-            offset += ShaderDatatypeResolver::GetSize(layoutElem.type);
+            offset += ShaderDatatypeLookup::GetSize(layoutElem.type);
         }
         m_layoutSize = offset;
 
@@ -31,7 +31,7 @@ namespace Ray::OpenGL
     void UniformBuffer::UpdateUniform(uint32_t index, void *data)
     {
         const auto &layoutElem = m_layout[index];
-        glNamedBufferSubData(m_rendererID, layoutElem.offset, ShaderDatatypeResolver::GetSize(layoutElem.type) * layoutElem.values, data);
+        glNamedBufferSubData(m_rendererID, layoutElem.offset, ShaderDatatypeLookup::GetSize(layoutElem.type) * layoutElem.values, data);
     }
     void UniformBuffer::UpdateUniform(const std::string &name, void *data)
     {
@@ -40,6 +40,6 @@ namespace Ray::OpenGL
             if (layoutElem.name == name)
                 elem = &layoutElem;
         if (elem)
-            glNamedBufferSubData(m_rendererID, elem->offset, ShaderDatatypeResolver::GetSize(elem->type) * elem->values, data);
+            glNamedBufferSubData(m_rendererID, elem->offset, ShaderDatatypeLookup::GetSize(elem->type) * elem->values, data);
     }
 }

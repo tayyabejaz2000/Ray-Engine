@@ -52,11 +52,11 @@ namespace Ray::OpenGL
             case ShaderDatatype::Bool3:
             case ShaderDatatype::Bool4:
                 glVertexAttribIPointer(m_vertexBufferIndex,
-                                       ShaderDatatypeResolver::GetComponentCount(layoutElem.type),
-                                       ShaderDatatypeResolver::GetType(layoutElem.type),
+                                       ShaderDatatypeLookup::GetComponentCount(layoutElem.type),
+                                       ShaderDatatypeLookup::GetType(layoutElem.type),
                                        stride,
                                        reinterpret_cast<const void *>(offset));
-                offset += ShaderDatatypeResolver::GetSize(layoutElem.type);
+                offset += ShaderDatatypeLookup::GetSize(layoutElem.type);
                 break;
             case ShaderDatatype::Mat2:
             case ShaderDatatype::Mat2x3:
@@ -73,12 +73,12 @@ namespace Ray::OpenGL
                 break;
             default:
                 glVertexAttribPointer(m_vertexBufferIndex,
-                                      ShaderDatatypeResolver::GetComponentCount(layoutElem.type),
-                                      ShaderDatatypeResolver::GetType(layoutElem.type),
+                                      ShaderDatatypeLookup::GetComponentCount(layoutElem.type),
+                                      ShaderDatatypeLookup::GetType(layoutElem.type),
                                       layoutElem.normalized ? GL_TRUE : GL_FALSE,
                                       stride,
                                       reinterpret_cast<const void *>(offset));
-                offset += ShaderDatatypeResolver::GetSize(layoutElem.type);
+                offset += ShaderDatatypeLookup::GetSize(layoutElem.type);
                 break;
             }
             ++m_vertexBufferIndex;

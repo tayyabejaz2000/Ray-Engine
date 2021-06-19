@@ -4,7 +4,7 @@
 
 namespace Ray::OpenGL
 {
-    uint32_t ShaderDatatypeResolver::s_TypeLookup[] = {
+    uint32_t ShaderDatatypeLookup::s_TypeLookup[] = {
         [(uint32_t)ShaderDatatype::Int] = GL_INT,
         [(uint32_t)ShaderDatatype::Uint] = GL_UNSIGNED_INT,
         [(uint32_t)ShaderDatatype::Bool] = GL_BOOL,
@@ -45,7 +45,7 @@ namespace Ray::OpenGL
         [(uint32_t)ShaderDatatype::Mat4x3] = GL_FLOAT,
         [(uint32_t)ShaderDatatype::Mat4] = GL_FLOAT,
     };
-    uint8_t ShaderDatatypeResolver::s_CountLookup[] = {
+    uint8_t ShaderDatatypeLookup::s_CountLookup[] = {
         [(uint32_t)ShaderDatatype::Int] = 1,
         [(uint32_t)ShaderDatatype::Uint] = 1,
         [(uint32_t)ShaderDatatype::Bool] = 1,
@@ -86,7 +86,7 @@ namespace Ray::OpenGL
         [(uint32_t)ShaderDatatype::Mat4x3] = 4,
         [(uint32_t)ShaderDatatype::Mat4] = 4,
     };
-    uint16_t ShaderDatatypeResolver::s_SizeLookup[] = {
+    uint16_t ShaderDatatypeLookup::s_SizeLookup[] = {
         [(uint32_t)ShaderDatatype::Int] = sizeof(GLint),
         [(uint32_t)ShaderDatatype::Uint] = sizeof(GLuint),
         [(uint32_t)ShaderDatatype::Bool] = sizeof(GLboolean),
@@ -171,7 +171,7 @@ namespace Ray::OpenGL
     {
         auto stride = 0u;
         for (auto &elem : layout)
-            stride += ShaderDatatypeResolver::GetSize(elem.type);
+            stride += ShaderDatatypeLookup::GetSize(elem.type);
         return stride;
     }
 }

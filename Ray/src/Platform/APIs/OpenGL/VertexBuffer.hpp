@@ -4,7 +4,7 @@ namespace Ray::OpenGL
 {
     uint32_t RAYAPI GetStride(const VertexBufferLayout &);
 
-    class RAYAPI ShaderDatatypeResolver
+    class RAYAPI ShaderDatatypeLookup
     {
     private:
         static uint32_t s_TypeLookup[];

@@ -7,23 +7,33 @@
 
 namespace Ray::OpenGL
 {
+    class TextureSpecificationToGLTypes
+    {
+    public:
+        static uint32_t GetTextureWrapping(const TextureWrap &);
+        static uint32_t GetTextureDataFormat(const TextureFormat &);
+        static uint32_t GetTextureFormat(const TextureFormat &format) { return s_formatLookup[(uint32_t)format]; }
+
+    private:
+        static uint8_t s_formatLookup[];
+    };
+
     class Texture2D : public Ray::Texture2D
     {
     public:
-        Texture2D(uint32_t, uint32_t);
+        Texture2D(const Texture2DSpecification &);
         Texture2D(const std::string &);
         virtual ~Texture2D();
 
-        virtual uint32_t GetWidth() const override { return m_width; }
-        virtual uint32_t GetHeight() const override { return m_height; }
+        virtual const Texture2DSpecification &GetSpecifications() const override { return m_specs; }
 
         virtual void Bind(uint32_t = 0) const override;
 
         virtual void SetData(void *, uint32_t) override;
+        virtual void Clear(uint32_t = 0) override;
 
     private:
         uid_t m_rendererID;
-        uint32_t m_width, m_height;
-        GLenum m_internalFormat, m_dataFormat;
+        Texture2DSpecification m_specs;
     };
 }
