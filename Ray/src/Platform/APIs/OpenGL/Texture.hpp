@@ -15,7 +15,7 @@ namespace Ray::OpenGL
         static uint32_t GetTextureFormat(const TextureFormat &format) { return s_formatLookup[(uint32_t)format]; }
 
     private:
-        static uint8_t s_formatLookup[];
+        static uint32_t s_formatLookup[];
     };
 
     class Texture2D : public Ray::Texture2D

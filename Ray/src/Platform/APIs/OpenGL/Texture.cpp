@@ -3,27 +3,27 @@
 
 namespace Ray::OpenGL
 {
-    uint8_t TextureSpecificationToGLTypes::s_formatLookup[] = {
-        [TextureFormat::R8] = GL_R8,
-        [TextureFormat::R8I] = GL_R8I,
-        [TextureFormat::R32F] = GL_R32F,
+    uint32_t TextureSpecificationToGLTypes::s_formatLookup[] = {
+        [(uint32_t)TextureFormat::R8] = GL_R8,
+        [(uint32_t)TextureFormat::R8I] = GL_R8I,
+        [(uint32_t)TextureFormat::R32F] = GL_R32F,
 
-        [TextureFormat::RG8] = GL_RG8,
-        [TextureFormat::RG8I] = GL_RG8I,
-        [TextureFormat::RG32F] = GL_RG32F,
+        [(uint32_t)TextureFormat::RG8] = GL_RG8,
+        [(uint32_t)TextureFormat::RG8I] = GL_RG8I,
+        [(uint32_t)TextureFormat::RG32F] = GL_RG32F,
 
-        [TextureFormat::RGB8] = GL_RGB8,
-        [TextureFormat::RGB32F] = GL_RGB32F,
+        [(uint32_t)TextureFormat::RGB8] = GL_RGB8,
+        [(uint32_t)TextureFormat::RGB32F] = GL_RGB32F,
 
-        [TextureFormat::RGBA8] = GL_RGBA8,
-        [TextureFormat::RGBA16] = GL_RGBA16,
-        [TextureFormat::RGBA16F] = GL_RGBA16F,
-        [TextureFormat::RGB32I] = GL_RGB32I,
-        [TextureFormat::RGBA32F] = GL_RGBA32F,
+        [(uint32_t)TextureFormat::RGBA8] = GL_RGBA8,
+        [(uint32_t)TextureFormat::RGBA16] = GL_RGBA16,
+        [(uint32_t)TextureFormat::RGBA16F] = GL_RGBA16F,
+        [(uint32_t)TextureFormat::RGB32I] = GL_RGB32I,
+        [(uint32_t)TextureFormat::RGBA32F] = GL_RGBA32F,
 
-        [TextureFormat::STENCIL8] = GL_STENCIL_INDEX8,
-        [TextureFormat::DEPTH24STENCIL8] = GL_DEPTH24_STENCIL8,
-        [TextureFormat::DEPTH32] = GL_DEPTH_COMPONENT32F, //Check this either GL_DEPTH or GL_DEPTH_COMPONENT32F
+        [(uint32_t)TextureFormat::STENCIL8] = GL_STENCIL_INDEX8,
+        [(uint32_t)TextureFormat::DEPTH24STENCIL8] = GL_DEPTH24_STENCIL8,
+        [(uint32_t)TextureFormat::DEPTH32] = GL_DEPTH_COMPONENT32F, //Check this either GL_DEPTH or GL_DEPTH_COMPONENT32F
     };
 
     uint32_t TextureSpecificationToGLTypes::GetTextureWrapping(const TextureWrap &wrapping)
@@ -41,8 +41,9 @@ namespace Ray::OpenGL
         case TextureWrap::CLAMP_TO_BORDER:
             return GL_CLAMP_TO_BORDER;
         }
+        return GL_NONE;
     }
-    static uint32_t GetTextureDataFormat(const TextureFormat &format)
+    uint32_t TextureSpecificationToGLTypes::GetTextureDataFormat(const TextureFormat &format)
     {
         switch (format)
         {
@@ -61,6 +62,7 @@ namespace Ray::OpenGL
         case TextureFormat::DEPTH32:
             return GL_DEPTH;
         };
+        return GL_NONE;
     }
 
     Texture2D::Texture2D(const Texture2DSpecification &specs) : m_specs(specs)

@@ -16,6 +16,8 @@ project "Ray"
     files {
         "src/**.hpp",
         "src/**.cpp",
+        "vendor/stb_image/**.h",
+		"vendor/stb_image/**.cpp",
         "vendor/glm/glm/**.hpp",
         "vendor/glm/glm/**.inl",
     }

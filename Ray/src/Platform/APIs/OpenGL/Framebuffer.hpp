@@ -14,9 +14,9 @@ namespace Ray::OpenGL
         virtual void Unbind() const override;
 
         virtual void Resize(uint32_t, uint32_t) override;
-        virtual void ClearAttachment(uint32_t, int32_t) override;
+        virtual void ClearColorAttachment(uint32_t, int32_t = 0) override;
 
-        virtual const FramebufferSpecification &GetSpecification() const override;
+        virtual const FramebufferSpecification &GetSpecification() const override { return m_specs; }
 
     private:
         void Invalidate();
@@ -32,5 +32,8 @@ namespace Ray::OpenGL
         ///TODO: Create RenderTexture class and hold its Reference
         std::vector<uid_t> m_colorAttachments;
         uid_t m_depthAttachment;
+
+        TextureAttachmentsSpecifications m_colorAttachmentsSpecs;
+        RenderTextureSpecification m_depthAttachmentSpecs;
     };
 }

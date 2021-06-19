@@ -22,7 +22,7 @@ RESCOMP = windres
 PCH = src/raypch.hpp
 PCH_PLACEHOLDER = $(OBJDIR)/$(notdir $(PCH))
 GCH = $(PCH_PLACEHOLDER).gch
-INCLUDES += -Isrc -Ivendor/GLFW/include -Ivendor/glad/include -Ivendor/glm
+INCLUDES += -Isrc -Ivendor/GLFW/include -Ivendor/glad/include -Ivendor/glm -Ivendor/stb_image
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -72,12 +72,17 @@ GENERATED += $(OBJDIR)/Application.o
 GENERATED += $(OBJDIR)/ApplicationLayer.o
 GENERATED += $(OBJDIR)/Buffer.o
 GENERATED += $(OBJDIR)/EventDispatcher.o
+GENERATED += $(OBJDIR)/Framebuffer.o
+GENERATED += $(OBJDIR)/Framebuffer1.o
 GENERATED += $(OBJDIR)/GraphicsContext.o
 GENERATED += $(OBJDIR)/GraphicsContext1.o
 GENERATED += $(OBJDIR)/IndexBuffer.o
 GENERATED += $(OBJDIR)/LayerStack.o
 GENERATED += $(OBJDIR)/LinuxWindow.o
 GENERATED += $(OBJDIR)/Renderer.o
+GENERATED += $(OBJDIR)/Shader.o
+GENERATED += $(OBJDIR)/Texture.o
+GENERATED += $(OBJDIR)/Texture1.o
 GENERATED += $(OBJDIR)/UniformBuffer.o
 GENERATED += $(OBJDIR)/UniformBuffer1.o
 GENERATED += $(OBJDIR)/VertexArray.o
@@ -85,16 +90,22 @@ GENERATED += $(OBJDIR)/VertexArray1.o
 GENERATED += $(OBJDIR)/VertexBuffer.o
 GENERATED += $(OBJDIR)/Window.o
 GENERATED += $(OBJDIR)/raypch.o
+GENERATED += $(OBJDIR)/stb_image.o
 OBJECTS += $(OBJDIR)/Application.o
 OBJECTS += $(OBJDIR)/ApplicationLayer.o
 OBJECTS += $(OBJDIR)/Buffer.o
 OBJECTS += $(OBJDIR)/EventDispatcher.o
+OBJECTS += $(OBJDIR)/Framebuffer.o
+OBJECTS += $(OBJDIR)/Framebuffer1.o
 OBJECTS += $(OBJDIR)/GraphicsContext.o
 OBJECTS += $(OBJDIR)/GraphicsContext1.o
 OBJECTS += $(OBJDIR)/IndexBuffer.o
 OBJECTS += $(OBJDIR)/LayerStack.o
 OBJECTS += $(OBJDIR)/LinuxWindow.o
 OBJECTS += $(OBJDIR)/Renderer.o
+OBJECTS += $(OBJDIR)/Shader.o
+OBJECTS += $(OBJDIR)/Texture.o
+OBJECTS += $(OBJDIR)/Texture1.o
 OBJECTS += $(OBJDIR)/UniformBuffer.o
 OBJECTS += $(OBJDIR)/UniformBuffer1.o
 OBJECTS += $(OBJDIR)/VertexArray.o
@@ -102,6 +113,7 @@ OBJECTS += $(OBJDIR)/VertexArray1.o
 OBJECTS += $(OBJDIR)/VertexBuffer.o
 OBJECTS += $(OBJDIR)/Window.o
 OBJECTS += $(OBJDIR)/raypch.o
+OBJECTS += $(OBJDIR)/stb_image.o
 
 # Rules
 # #############################################
@@ -180,10 +192,19 @@ $(OBJDIR)/EventDispatcher.o: src/Events/EventDispatcher.cpp
 $(OBJDIR)/ApplicationLayer.o: src/Layers/ApplicationLayer.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Framebuffer.o: src/Platform/APIs/OpenGL/Framebuffer.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/GraphicsContext.o: src/Platform/APIs/OpenGL/GraphicsContext.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/IndexBuffer.o: src/Platform/APIs/OpenGL/IndexBuffer.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Shader.o: src/Platform/APIs/OpenGL/Shader.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Texture.o: src/Platform/APIs/OpenGL/Texture.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/UniformBuffer.o: src/Platform/APIs/OpenGL/UniformBuffer.cpp
@@ -201,10 +222,16 @@ $(OBJDIR)/LinuxWindow.o: src/Platform/Linux/LinuxWindow.cpp
 $(OBJDIR)/Buffer.o: src/Renderer/Buffer.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Framebuffer1.o: src/Renderer/Framebuffer.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/GraphicsContext1.o: src/Renderer/GraphicsContext.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Renderer.o: src/Renderer/Renderer.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Texture1.o: src/Renderer/Texture.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/UniformBuffer1.o: src/Renderer/UniformBuffer.cpp
@@ -214,6 +241,9 @@ $(OBJDIR)/VertexArray1.o: src/Renderer/VertexArray.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/raypch.o: src/raypch.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/stb_image.o: vendor/stb_image/stb_image.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

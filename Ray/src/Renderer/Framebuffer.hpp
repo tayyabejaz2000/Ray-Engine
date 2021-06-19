@@ -32,7 +32,7 @@ namespace Ray
         virtual void Unbind() const = 0;
 
         virtual void Resize(uint32_t, uint32_t) = 0;
-        virtual void ClearAttachment(uint32_t, int32_t) = 0;
+        virtual void ClearColorAttachment(uint32_t, int32_t = 0) = 0;
 
         ///TODO: Create Render Texture Class and store them in Framebuffer
         /*

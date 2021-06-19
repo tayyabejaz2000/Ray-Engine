@@ -3,7 +3,7 @@
 
 namespace Ray::OpenGL
 {
-    Framebuffer::Framebuffer(const FramebufferSpecification &specs) : m_rendererID(0), m_specs(specs)
+    Framebuffer::Framebuffer(const FramebufferSpecification &specs) : m_rendererID(0), m_specs(specs), m_depthAttachment(uint32_t(-1))
     {
         Invalidate();
     }
@@ -11,7 +11,7 @@ namespace Ray::OpenGL
     {
         Release();
     }
-    void Framebuffer::AttachColorTexture(uint32_t rendererID, uint32_t index, RenderTextureSpecification specs, bool multisampled = false)
+    void Framebuffer::AttachColorTexture(uint32_t rendererID, uint32_t index, RenderTextureSpecification specs, bool multisampled)
     {
         auto target = (multisampled) ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;
         if (multisampled)
@@ -38,7 +38,7 @@ namespace Ray::OpenGL
         }
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, target, rendererID, 0);
     }
-    void Framebuffer::AttachDepthTexture(uint32_t rendererID, RenderTextureSpecification specs, bool multisampled = false)
+    void Framebuffer::AttachDepthTexture(uint32_t rendererID, RenderTextureSpecification specs, bool multisampled)
     {
         auto target = (multisampled) ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;
         if (multisampled)
@@ -81,8 +81,23 @@ namespace Ray::OpenGL
     {
         if (m_rendererID)
             Release();
+        auto &textureSpecs = m_specs.RenderTexturesSpecs;
 
-        m_colorAttachments.resize(m_specs.RenderTexturesSpecs.size());
+        for (auto &textureSpec : textureSpecs)
+        {
+            switch (textureSpec.Format)
+            {
+            case TextureFormat::R8... TextureFormat::RGBA32F:
+                m_colorAttachmentsSpecs.push_back(textureSpec);
+                break;
+            case TextureFormat::STENCIL8... TextureFormat::DEPTH32:
+                m_depthAttachmentSpecs = textureSpec;
+                m_depthAttachment = 0;
+                break;
+            }
+        }
+
+        m_colorAttachments.resize(m_colorAttachmentsSpecs.size());
 
         glCreateFramebuffers(1, &m_rendererID);
         glBindFramebuffer(GL_FRAMEBUFFER, m_rendererID);
@@ -93,26 +108,17 @@ namespace Ray::OpenGL
         glCreateTextures(target, m_colorAttachments.size(), m_colorAttachments.data());
         glCreateTextures(target, 1, &m_depthAttachment);
 
-        auto &textureSpecs = m_specs.RenderTexturesSpecs;
         auto i = 0u;
-        for (auto &textureSpec : textureSpecs)
+        for (auto &colorAttachmentSpec : m_colorAttachmentsSpecs)
         {
-            switch (textureSpec.Format)
-            {
-            case TextureFormat::R8... TextureFormat::RGBA32F:
-            {
-                glBindTexture(target, m_colorAttachments[i]);
-                AttachColorTexture(m_colorAttachments[i], i, textureSpec, multisample);
-                ++i;
-            }
-            break;
-            case TextureFormat::STENCIL8... TextureFormat::DEPTH32:
-            {
-                glBindTexture(target, m_depthAttachment);
-                AttachDepthTexture(m_depthAttachment, textureSpec, multisample);
-            }
-            break;
-            }
+            glBindTexture(target, m_colorAttachments[i]);
+            AttachColorTexture(m_colorAttachments[i], i, colorAttachmentSpec, multisample);
+            ++i;
+        }
+        if (m_depthAttachment == 0u)
+        {
+            glBindTexture(target, m_depthAttachment);
+            AttachDepthTexture(m_depthAttachment, m_depthAttachmentSpecs, multisample);
         }
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -128,6 +134,7 @@ namespace Ray::OpenGL
 
         m_colorAttachments.clear();
         m_rendererID = 0;
+        m_depthAttachment = uint32_t(-1);
     }
 
     void Framebuffer::Bind() const
@@ -145,5 +152,11 @@ namespace Ray::OpenGL
         m_specs.Height = height;
 
         Invalidate();
+    }
+    void Framebuffer::ClearColorAttachment(uint32_t index, int32_t value)
+    {
+        glClearTexImage(m_colorAttachments[index], 0,
+                        TextureSpecificationToGLTypes::GetTextureFormat(m_colorAttachmentsSpecs[index].Format),
+                        GL_INT, &value);
     }
 }
