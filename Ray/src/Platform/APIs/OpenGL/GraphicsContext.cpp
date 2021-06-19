@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 
-#include "GraphicsContext.hpp"
+#include "Platform/APIs/OpenGL/GraphicsContext.hpp"
 
 namespace Ray::OpenGL
 {

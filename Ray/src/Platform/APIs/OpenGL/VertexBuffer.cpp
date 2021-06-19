@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 
-#include "VertexBuffer.hpp"
+#include "Platform/APIs/OpenGL/VertexBuffer.hpp"
 
 namespace Ray::OpenGL
 {
@@ -45,7 +45,7 @@ namespace Ray::OpenGL
         [(uint32_t)ShaderDatatype::Mat4x3] = GL_FLOAT,
         [(uint32_t)ShaderDatatype::Mat4] = GL_FLOAT,
     };
-    uint8_t ShaderDatatypeResolver::s_SizeLookup[] = {
+    uint8_t ShaderDatatypeResolver::s_CountLookup[] = {
         [(uint32_t)ShaderDatatype::Int] = 1,
         [(uint32_t)ShaderDatatype::Uint] = 1,
         [(uint32_t)ShaderDatatype::Bool] = 1,
@@ -74,17 +74,58 @@ namespace Ray::OpenGL
         [(uint32_t)ShaderDatatype::Float4] = 4,
         [(uint32_t)ShaderDatatype::Double4] = 4,
 
-        [(uint32_t)ShaderDatatype::Mat2] = 4,
-        [(uint32_t)ShaderDatatype::Mat2x3] = 6,
-        [(uint32_t)ShaderDatatype::Mat2x4] = 8,
+        [(uint32_t)ShaderDatatype::Mat2] = 2,
+        [(uint32_t)ShaderDatatype::Mat2x3] = 2,
+        [(uint32_t)ShaderDatatype::Mat2x4] = 2,
 
-        [(uint32_t)ShaderDatatype::Mat3x2] = 6,
-        [(uint32_t)ShaderDatatype::Mat3] = 9,
-        [(uint32_t)ShaderDatatype::Mat3x4] = 12,
+        [(uint32_t)ShaderDatatype::Mat3x2] = 3,
+        [(uint32_t)ShaderDatatype::Mat3] = 3,
+        [(uint32_t)ShaderDatatype::Mat3x4] = 3,
 
-        [(uint32_t)ShaderDatatype::Mat4x2] = 8,
-        [(uint32_t)ShaderDatatype::Mat4x3] = 12,
-        [(uint32_t)ShaderDatatype::Mat4] = 16,
+        [(uint32_t)ShaderDatatype::Mat4x2] = 4,
+        [(uint32_t)ShaderDatatype::Mat4x3] = 4,
+        [(uint32_t)ShaderDatatype::Mat4] = 4,
+    };
+    uint16_t ShaderDatatypeResolver::s_SizeLookup[] = {
+        [(uint32_t)ShaderDatatype::Int] = sizeof(GLint),
+        [(uint32_t)ShaderDatatype::Uint] = sizeof(GLuint),
+        [(uint32_t)ShaderDatatype::Bool] = sizeof(GLboolean),
+        [(uint32_t)ShaderDatatype::Half] = sizeof(GLhalf),
+        [(uint32_t)ShaderDatatype::Float] = sizeof(GLfloat),
+        [(uint32_t)ShaderDatatype::Double] = sizeof(GLdouble),
+
+        [(uint32_t)ShaderDatatype::Int2] = sizeof(GLint) * 2,
+        [(uint32_t)ShaderDatatype::Uint2] = sizeof(GLuint) * 2,
+        [(uint32_t)ShaderDatatype::Bool2] = sizeof(GLboolean) * 2,
+        [(uint32_t)ShaderDatatype::Half2] = sizeof(GLhalf) * 2,
+        [(uint32_t)ShaderDatatype::Float2] = sizeof(GLfloat) * 2,
+        [(uint32_t)ShaderDatatype::Double2] = sizeof(GLdouble) * 2,
+
+        [(uint32_t)ShaderDatatype::Int3] = sizeof(GLint) * 3,
+        [(uint32_t)ShaderDatatype::Uint3] = sizeof(GLuint) * 3,
+        [(uint32_t)ShaderDatatype::Bool3] = sizeof(GLboolean) * 3,
+        [(uint32_t)ShaderDatatype::Half3] = sizeof(GLhalf) * 3,
+        [(uint32_t)ShaderDatatype::Float3] = sizeof(GLfloat) * 3,
+        [(uint32_t)ShaderDatatype::Double3] = sizeof(GLdouble) * 3,
+
+        [(uint32_t)ShaderDatatype::Int4] = sizeof(GLint) * 4,
+        [(uint32_t)ShaderDatatype::Uint4] = sizeof(GLuint) * 4,
+        [(uint32_t)ShaderDatatype::Bool4] = sizeof(GLboolean) * 4,
+        [(uint32_t)ShaderDatatype::Half4] = sizeof(GLhalf) * 4,
+        [(uint32_t)ShaderDatatype::Float4] = sizeof(GLfloat) * 4,
+        [(uint32_t)ShaderDatatype::Double4] = sizeof(GLdouble) * 4,
+
+        [(uint32_t)ShaderDatatype::Mat2] = sizeof(GLfloat) * 4,
+        [(uint32_t)ShaderDatatype::Mat2x3] = sizeof(GLfloat) * 6,
+        [(uint32_t)ShaderDatatype::Mat2x4] = sizeof(GLfloat) * 8,
+
+        [(uint32_t)ShaderDatatype::Mat3x2] = sizeof(GLfloat) * 6,
+        [(uint32_t)ShaderDatatype::Mat3] = sizeof(GLfloat) * 9,
+        [(uint32_t)ShaderDatatype::Mat3x4] = sizeof(GLfloat) * 12,
+
+        [(uint32_t)ShaderDatatype::Mat4x2] = sizeof(GLfloat) * 8,
+        [(uint32_t)ShaderDatatype::Mat4x3] = sizeof(GLfloat) * 12,
+        [(uint32_t)ShaderDatatype::Mat4] = sizeof(GLfloat) * 16,
     };
 
     VertexBuffer::VertexBuffer(std::size_t bufferSize) : Ray::VertexBuffer()

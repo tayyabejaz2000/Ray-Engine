@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 
-#include "IndexBuffer.hpp"
+#include "Platform/APIs/OpenGL/IndexBuffer.hpp"
 
 namespace Ray::OpenGL
 {

@@ -8,14 +8,19 @@ namespace Ray::OpenGL
     {
     private:
         static uint32_t s_TypeLookup[];
-        static uint8_t s_SizeLookup[];
+        static uint8_t s_CountLookup[];
+        static uint16_t s_SizeLookup[];
 
     public:
-        static inline uint32_t GetType(ShaderDatatype type)
+        static inline uint32_t GetType(const ShaderDatatype &type)
         {
             return s_TypeLookup[(uint32_t)type];
         }
-        static inline uint32_t GetSize(ShaderDatatype type)
+        static inline uint32_t GetComponentCount(const ShaderDatatype &type)
+        {
+            return static_cast<uint32_t>(s_CountLookup[(uint32_t)type]);
+        }
+        static inline uint32_t GetSize(const ShaderDatatype &type)
         {
             return static_cast<uint32_t>(s_SizeLookup[(uint32_t)type]);
         }

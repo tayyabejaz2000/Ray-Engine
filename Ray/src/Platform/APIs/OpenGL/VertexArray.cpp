@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 
-#include "VertexArray.hpp"
+#include "Platform/APIs/OpenGL/VertexArray.hpp"
 #include "Platform/APIs/OpenGL/VertexBuffer.hpp"
 
 namespace Ray::OpenGL
@@ -52,18 +52,33 @@ namespace Ray::OpenGL
             case ShaderDatatype::Bool3:
             case ShaderDatatype::Bool4:
                 glVertexAttribIPointer(m_vertexBufferIndex,
-                                       ShaderDatatypeResolver::GetSize(layoutElem.type),
+                                       ShaderDatatypeResolver::GetComponentCount(layoutElem.type),
                                        ShaderDatatypeResolver::GetType(layoutElem.type),
                                        stride,
                                        reinterpret_cast<const void *>(offset));
+                offset += ShaderDatatypeResolver::GetSize(layoutElem.type);
+                break;
+            case ShaderDatatype::Mat2:
+            case ShaderDatatype::Mat2x3:
+            case ShaderDatatype::Mat2x4:
+            case ShaderDatatype::Mat3x2:
+            case ShaderDatatype::Mat3:
+            case ShaderDatatype::Mat3x4:
+            case ShaderDatatype::Mat4x2:
+            case ShaderDatatype::Mat4x3:
+            case ShaderDatatype::Mat4:
+                ///TODO: Implement Matrix Vertex Attribute after a bit research
+                ///Ignored for now
+                --m_vertexBufferIndex;
                 break;
             default:
                 glVertexAttribPointer(m_vertexBufferIndex,
-                                      ShaderDatatypeResolver::GetSize(layoutElem.type),
+                                      ShaderDatatypeResolver::GetComponentCount(layoutElem.type),
                                       ShaderDatatypeResolver::GetType(layoutElem.type),
                                       layoutElem.normalized ? GL_TRUE : GL_FALSE,
                                       stride,
                                       reinterpret_cast<const void *>(offset));
+                offset += ShaderDatatypeResolver::GetSize(layoutElem.type);
                 break;
             }
             ++m_vertexBufferIndex;
