@@ -29,8 +29,8 @@ namespace Ray::OpenGL
 
         virtual void Bind(uint32_t = 0) const override;
 
-        virtual void SetData(void *, uint32_t) override;
         virtual void Clear(uint32_t = 0) override;
+        virtual void SetData(void *, uint32_t) override;
 
     private:
         uid_t m_rendererID;

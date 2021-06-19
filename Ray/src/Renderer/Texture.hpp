@@ -18,6 +18,7 @@ namespace Ray
     ///TODO: Support more format
     enum class TextureFormat : uint8_t
     {
+        //Color
         R8,
         R8I,
         R32F,
@@ -35,6 +36,7 @@ namespace Ray
         RGB32I,
         RGBA32F,
 
+        //Depth/Stencil
         STENCIL8,
         DEPTH24STENCIL8,
         DEPTH32,
@@ -54,16 +56,11 @@ namespace Ray
     {
         uint32_t Width, Height;
         TextureFormat Format;
-        union
-        {
-            TextureWrap Wrapping[2];
-            struct
-            {
-                TextureWrap WrappingS;
-                TextureWrap WrappingT;
-            };
-        };
+        TextureWrap WrappingR = TextureWrap::REPEAT;
+        TextureWrap WrappingS = TextureWrap::REPEAT;
+        TextureWrap WrappingT = TextureWrap::REPEAT;
     };
+
     class Texture
     {
     public:
