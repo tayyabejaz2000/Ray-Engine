@@ -31,6 +31,6 @@ namespace Ray
         virtual void UpdateUniform(const std::string &, void *) = 0;
 
     public:
-        Ref<UniformBuffer> Create(const UniformBufferLayout &, uint32_t);
+        static Ref<UniformBuffer> Create(const UniformBufferLayout &, uint32_t);
     };
 }

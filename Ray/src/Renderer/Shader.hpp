@@ -17,7 +17,7 @@ namespace Ray
 
     public:
         template <class... ShaderSources>
-        Ref<Shader> Create(const ShaderSources &...);
+        static Ref<Shader> Create(const ShaderSources &...);
     };
 
     //Takes in string data of shader code (Seperate for OpenGL i.e. Vertex and Fragment Shader in different files)

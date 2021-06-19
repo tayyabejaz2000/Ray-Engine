@@ -32,7 +32,8 @@ project "Ray"
         "src",
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.glad}",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.stb_image}"
     }
 
     links {

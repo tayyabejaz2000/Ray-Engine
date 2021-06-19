@@ -19,6 +19,7 @@ IncludeDir["GLFW"] = "%{wks.location}/Ray/vendor/GLFW/include"
 IncludeDir["glad"] = "%{wks.location}/Ray/vendor/glad/include"
 IncludeDir["glm"] = "%{wks.location}/Ray/vendor/glm"
 IncludeDir["spdlog"] = "%{wks.location}/Ray/vendor/spdlog/include"
+IncludeDir["stb_image"] = "%{wks.location}/Ray/vendor/stb_image"
 
 
 group "Dependencies"
