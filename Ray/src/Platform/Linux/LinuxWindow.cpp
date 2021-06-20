@@ -167,7 +167,7 @@ namespace Ray
                                        double x, y;
                                        glfwGetCursorPos(window, &x, &y);
                                        MouseVec2 mousePos{static_cast<float>(x), static_cast<float>(y)};
-                                       if (action == GLFW_PRESS)
+                                       if (action == GLFW_PRESS || action == GLFW_REPEAT)
                                        {
                                            MouseButtonPressedEvent e(mousePos, RayMouseButtonCast(button), RayKeyModifierCast(mods));
                                            EventDispatcher::GetEventDispatcher()->Dispatch(e);

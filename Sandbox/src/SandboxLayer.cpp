@@ -4,10 +4,12 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "SandboxLayer.hpp"
 
+#include "Core/Input.hpp"
 #include "Platform/APIs/OpenGL/Texture.hpp"
 
 namespace Ray
 {
+    static const auto maxBufferSize = 100000u;
     struct Vertex
     {
         glm::vec3 position;
@@ -17,36 +19,28 @@ namespace Ray
         float tilingFactor = 1.0f;
     };
 
-    SandboxLayer::SandboxLayer() : Layer()
+    SandboxLayer::SandboxLayer() : Layer(), rand_dev(std::random_device{}()), dist(0.0f, 1.0f)
     {
-        Vertex vertices[] = {
-            {.position = {0.5f, 0.5f, 0.0f}, .color = {0.1f, 0.1f, 0.1f, 1.0f}, .texCoord = {1.0f, 1.0f}, .texIndex = 0.0f, .tilingFactor = 2.0f},
-            {.position = {0.5f, -0.5f, 0.0f}, .color = {0.1f, 0.1f, 0.1f, 1.0f}, .texCoord = {1.0f, 0.0f}, .texIndex = 0.0f, .tilingFactor = 2.0f},
-            {.position = {-0.5f, -0.5f, 0.0f}, .color = {0.1f, 0.1f, 0.1f, 1.0f}, .texCoord = {0.0f, 0.0f}, .texIndex = 0.0f, .tilingFactor = 2.0f},
-            {.position = {-0.5f, 0.5f, 0.0f}, .color = {0.1f, 0.1f, 0.1f, 1.0f}, .texCoord = {0.0f, 1.0f}, .texIndex = 0.0f, .tilingFactor = 2.0f},
-        };
-        uint32_t indices[] = {
-            0, 1, 3, // first triangle
-            1, 2, 3  // second triangle
-        };
+        glEnable(GL_POLYGON_SMOOTH);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glPointSize(5.0f);
+        particlesBuffer.resize(maxBufferSize, ParticleVertex{});
+        transforms.resize(maxBufferSize, glm::mat4(1.0f));
 
         m_VAO = VertexArray::Create();
+        m_VBO = VertexBuffer::Create(maxBufferSize * sizeof(ParticleVertex));
 
-        auto VBO = VertexBuffer::Create(vertices, sizeof(vertices));
-        VBO->SetLayout({
+        m_VBO->SetLayout({
             {"a_Position", ShaderDatatype::Float3},
-            {"a_Color", ShaderDatatype::Float4},
-            {"a_TexCoord", ShaderDatatype::Float2},
-            {"a_TexIndex", ShaderDatatype::Float},
-            {"a_TilingFactor", ShaderDatatype::Float},
         });
-        m_VAO->AddVertexBuffer(VBO);
 
-        auto IBO = IndexBuffer::Create(indices, 6);
-        m_VAO->SetIndexBuffer(IBO);
+        m_VBO->SetData(particlesBuffer.data(), particlesBuffer.size() * sizeof(ParticleVertex));
 
-        auto vertSource = std::ifstream("Sandbox/assets/Shaders/vert.vs");
-        auto fragSource = std::ifstream("Sandbox/assets/Shaders/frag.fs");
+        m_VAO->AddVertexBuffer(m_VBO);
+
+        auto vertSource = std::ifstream("Sandbox/assets/Shaders/Particle.vs");
+        auto fragSource = std::ifstream("Sandbox/assets/Shaders/Particle.fs");
         if (!vertSource.is_open() || !fragSource.is_open())
             throw std::runtime_error("Cant Read Vertex or Fragment Shader");
 
@@ -55,13 +49,13 @@ namespace Ray
         vsSourceReader << vertSource.rdbuf();
         fsSourceReader << fragSource.rdbuf();
 
-        m_flatColorShader = Shader::Create(vsSourceReader.str(), fsSourceReader.str());
+        m_particleShader = Shader::Create(vsSourceReader.str(), fsSourceReader.str());
 
-        m_uniformBuffer = UniformBuffer::Create({
-                                                    {"u_ViewProjection", ShaderDatatype::Mat4},
-                                                },
-                                                0);
-        m_TileTexture = CreateRef<Ray::OpenGL::Texture2D>("Sandbox/assets/Textures/OIP.jpeg"s);
+        m_uniformBuffer[0] = UniformBuffer::Create({{"u_ViewProjection", ShaderDatatype::Mat4}}, 0);
+        m_uniformBuffer[1] = UniformBuffer::Create({{"u_Color", ShaderDatatype::Float4}}, 1);
+
+        auto color = glm::vec4(0.0f, 0.5f, 0.8f, 1.0f);
+        m_uniformBuffer[1]->SetData(glm::value_ptr(color));
     }
     SandboxLayer::~SandboxLayer()
     {
@@ -70,17 +64,56 @@ namespace Ray
     void SandboxLayer::OnUpdate(float delta_time)
     {
         auto transform = glm::mat4(1.0f);
-        m_uniformBuffer->SetData(glm::value_ptr(transform));
+        m_uniformBuffer[0]->SetData(glm::value_ptr(transform));
+        auto i = 0;
 
+        if (Input::IsMouseButtonPressed(MouseButton::BUTTON_LEFT))
+        {
+            auto pos = Input::GetMousePosition();
+            auto screenX = Application::GetApplication().GetWindow().GetSpecifications().width;
+            auto screenY = Application::GetApplication().GetWindow().GetSpecifications().height;
+            auto mousePos = glm::vec2(((pos.x) / screenX) * 2.0f - 1.0f, ((screenY - pos.y) / screenY) * 2.0f - 1.0f);
+            for (auto &point : particlesBuffer)
+            {
+                point.position.y -= dist(rand_dev) * 0.1f;
+
+                if (rand_dev() % 2 == 0)
+                    point.position.x += dist(rand_dev) * 0.05f;
+                else
+                    point.position.x -= dist(rand_dev) * 0.05f;
+
+                auto distance = glm::distance(mousePos, glm::vec2(point.position));
+                if (point.position.y < -1.0f)
+                    point.position = glm::vec3(0.0f, -point.position.y, 0.0f);
+                else if (distance < 0.1f)
+                    point.position = glm::vec3(0.0f, 1.0f, 0.0f);
+                ++i;
+            }
+        }
+        else
+        {
+            for (auto &point : particlesBuffer)
+            {
+                if (rand_dev() % 2 == 0)
+                    point.position.x += dist(rand_dev) * 0.05f;
+                else
+                    point.position.x -= dist(rand_dev) * 0.05f;
+                point.position.y -= dist(rand_dev) * 0.1f;
+                if (point.position.y < -1.0f)
+                    point.position = glm::vec3(0.0f, -point.position.y, 0.0f);
+                ++i;
+            }
+        }
+
+        m_VBO->SetData(particlesBuffer.data(), particlesBuffer.size() * sizeof(ParticleVertex));
         m_VAO->Bind();
-        m_TileTexture->Bind();
-        m_flatColorShader->Bind();
-
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        m_particleShader->Bind();
+        glDrawArrays(GL_POINTS, 0, maxBufferSize);
     }
 
     void SandboxLayer::OnEvent(KeyEvent &e)
     {
         std::cout << e.scancode << '\n';
     }
+
 }
