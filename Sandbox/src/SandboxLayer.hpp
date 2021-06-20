@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/Layer.hpp"
+#include "Ray.hpp"
 
 namespace Ray
 {
@@ -15,5 +15,9 @@ namespace Ray
         virtual void OnEvent(KeyEvent &) override;
 
     private:
+        Ref<VertexArray> m_VAO;
+        Ref<Shader> m_flatColorShader;
+        Ref<UniformBuffer> m_uniformBuffer;
+        Ref<Texture> m_TileTexture;
     };
 }

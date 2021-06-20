@@ -27,6 +27,8 @@ namespace Ray
         virtual void OnAttach() {}
         virtual void OnDetach() {}
 
+        ///TODO: Actually stop events if it is blocked
+
         //Returns if this layer should recieve as certain Event Type Call
         inline bool ShouldRecieveEvent(EventType flag) { return m_eventCallFlags & flag; }
         //Blocks a certain type of event

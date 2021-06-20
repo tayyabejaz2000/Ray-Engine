@@ -16,14 +16,6 @@ namespace Ray
         virtual void Unbind() const = 0;
 
     public:
-        template <class... ShaderSources>
-        static Ref<Shader> Create(const ShaderSources &...);
+        static Ref<Shader> Create(const std::string &, const std::string &);
     };
-
-    //Takes in string data of shader code (Seperate for OpenGL i.e. Vertex and Fragment Shader in different files)
-    template <class... ShaderSources>
-    Ref<Shader> Shader::Create(const ShaderSources &...sources)
-    {
-        return nullptr;
-    }
 }

@@ -13,8 +13,8 @@ namespace Ray
     {
         return CreateRef<OpenGL::VertexBuffer>(data, bufferSize);
     }
-    Ref<IndexBuffer> IndexBuffer::Create(void *data, std::size_t bufferSize)
+    Ref<IndexBuffer> IndexBuffer::Create(void *data, std::size_t count)
     {
-        return CreateRef<OpenGL::IndexBuffer>(data, bufferSize);
+        return CreateRef<OpenGL::IndexBuffer>(data, count);
     }
 }

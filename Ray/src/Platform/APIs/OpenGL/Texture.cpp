@@ -139,9 +139,11 @@ namespace Ray::OpenGL
     void Texture2D::SetData(void *data, uint32_t size)
     {
         auto dataFormat = TextureSpecificationToGLTypes::GetTextureDataFormat(m_specs.Format);
+        ///TODO: Get Size for each data format
         auto bpp = (dataFormat == GL_RGBA) ? 4u : 3u;
-        if (size != m_specs.Width * m_specs.Height * bpp)
-            throw std::runtime_error("Data must be entire Texture");
+        ///Warning: No check for now
+        //if (size != m_specs.Width * m_specs.Height * bpp)
+        //    throw std::runtime_error("Data must be entire Texture");
         glTextureSubImage2D(m_rendererID, 0, 0, 0, m_specs.Width, m_specs.Height, dataFormat, GL_UNSIGNED_BYTE, data);
     }
 

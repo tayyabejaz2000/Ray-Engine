@@ -4,10 +4,10 @@
 
 namespace Ray::OpenGL
 {
-    IndexBuffer::IndexBuffer(void *indices, std::size_t bufferSize)
+    IndexBuffer::IndexBuffer(void *indices, std::size_t count)
     {
         glCreateBuffers(1, &m_rendererID);
-        SetIndices(indices, bufferSize);
+        SetIndices(indices, count);
     }
     IndexBuffer::~IndexBuffer()
     {
@@ -23,10 +23,10 @@ namespace Ray::OpenGL
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    void IndexBuffer::SetIndices(void *indices, std::size_t bufferSize)
+    void IndexBuffer::SetIndices(void *indices, std::size_t count)
     {
         glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
-        glBufferData(GL_ARRAY_BUFFER, bufferSize * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
     }
 
     void IndexBuffer::GetIndices(void *indices, std::size_t bufferSize) const

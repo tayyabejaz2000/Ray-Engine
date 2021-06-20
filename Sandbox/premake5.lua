@@ -15,6 +15,7 @@ project "Sandbox"
 	includedirs {
 		"%{wks.location}/Ray/src",
 		"%{IncludeDir.glm}",
+		"%{IncludeDir.glad}",
 		"%{IncludeDir.spdlog}",
 	}
 

@@ -15,28 +15,46 @@ namespace Ray::OpenGL
             glShaderSource(vsShaderRendererID, 1, &vsSource, nullptr);
             glCompileShader(vsShaderRendererID);
             glGetShaderiv(vsShaderRendererID, GL_COMPILE_STATUS, &success);
-            if (!success)
+            if (success == GL_FALSE)
+            {
+                char errorLog[512];
+                int length;
+                glGetShaderInfoLog(vsShaderRendererID, 512, &length, errorLog);
+                std::cout << errorLog << '\n';
                 throw std::runtime_error("Failed to compile Vertex Shader");
+            }
             glAttachShader(m_rendererID, vsShaderRendererID);
             glDeleteShader(vsShaderRendererID);
         }
         //Compile and Attach Fragment/Pixel Shader
         {
-            const auto fsSource = VSSource.data();
+            const auto fsSource = FSSource.data();
             uint32_t fsShaderRendererID = glCreateShader(GL_FRAGMENT_SHADER);
             glShaderSource(fsShaderRendererID, 1, &fsSource, nullptr);
             glCompileShader(fsShaderRendererID);
             glGetShaderiv(fsShaderRendererID, GL_COMPILE_STATUS, &success);
-            if (!success)
+            if (success == GL_FALSE)
+            {
+                char errorLog[512];
+                int length;
+                glGetShaderInfoLog(fsShaderRendererID, 512, &length, errorLog);
+                std::cout << errorLog << '\n';
                 throw std::runtime_error("Failed to compile Fragment/Pixel Shader");
+            }
             glAttachShader(m_rendererID, fsShaderRendererID);
             glDeleteShader(fsShaderRendererID);
         }
 
         glLinkProgram(m_rendererID);
         glGetProgramiv(m_rendererID, GL_LINK_STATUS, &success);
-        if (!success)
+        if (success == GL_FALSE)
+        {
+            char errorLog[512];
+            int length;
+            glGetProgramInfoLog(m_rendererID, 512, &length, errorLog);
+            std::cout << errorLog << '\n';
             throw std::runtime_error("Failed to Link Shader");
+        }
     }
     Shader::~Shader()
     {
