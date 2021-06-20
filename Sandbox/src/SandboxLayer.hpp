@@ -18,6 +18,6 @@ namespace Ray
         Ref<VertexArray> m_VAO;
         Ref<Shader> m_flatColorShader;
         Ref<UniformBuffer> m_uniformBuffer;
-        Ref<Texture> m_TileTexture;
+        Ref<Texture2D> m_TileTexture;
     };
 }

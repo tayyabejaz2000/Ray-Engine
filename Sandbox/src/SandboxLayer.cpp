@@ -11,7 +11,6 @@ namespace Ray
     struct Vertex
     {
         glm::vec3 position;
-        glm::vec4 color;
         glm::vec2 texCoord;
         float texIndex = 0.0f;
         float tilingFactor = 1.0f;
@@ -20,10 +19,10 @@ namespace Ray
     SandboxLayer::SandboxLayer() : Layer()
     {
         Vertex vertices[] = {
-            {.position = {0.5f, 0.5f, 0.0f}, .color = {0.1f, 0.1f, 0.1f, 1.0f}, .texCoord = {1.0f, 1.0f}, .texIndex = 0.0f, .tilingFactor = 2.0f},
-            {.position = {0.5f, -0.5f, 0.0f}, .color = {0.1f, 0.1f, 0.1f, 1.0f}, .texCoord = {1.0f, 0.0f}, .texIndex = 0.0f, .tilingFactor = 2.0f},
-            {.position = {-0.5f, -0.5f, 0.0f}, .color = {0.1f, 0.1f, 0.1f, 1.0f}, .texCoord = {0.0f, 0.0f}, .texIndex = 0.0f, .tilingFactor = 2.0f},
-            {.position = {-0.5f, 0.5f, 0.0f}, .color = {0.1f, 0.1f, 0.1f, 1.0f}, .texCoord = {0.0f, 1.0f}, .texIndex = 0.0f, .tilingFactor = 2.0f},
+            {.position = {0.5f, 0.5f, 0.0f}, .texCoord = {1.0f, 1.0f}, .texIndex = 0.0f, .tilingFactor = 2.0f},
+            {.position = {0.5f, -0.5f, 0.0f}, .texCoord = {1.0f, 0.0f}, .texIndex = 0.0f, .tilingFactor = 2.0f},
+            {.position = {-0.5f, -0.5f, 0.0f}, .texCoord = {0.0f, 0.0f}, .texIndex = 0.0f, .tilingFactor = 2.0f},
+            {.position = {-0.5f, 0.5f, 0.0f}, .texCoord = {0.0f, 1.0f}, .texIndex = 0.0f, .tilingFactor = 2.0f},
         };
         uint32_t indices[] = {
             0, 1, 3, // first triangle
@@ -35,7 +34,6 @@ namespace Ray
         auto VBO = VertexBuffer::Create(vertices, sizeof(vertices));
         VBO->SetLayout({
             {"a_Position", ShaderDatatype::Float3},
-            {"a_Color", ShaderDatatype::Float4},
             {"a_TexCoord", ShaderDatatype::Float2},
             {"a_TexIndex", ShaderDatatype::Float},
             {"a_TilingFactor", ShaderDatatype::Float},
@@ -57,11 +55,11 @@ namespace Ray
 
         m_flatColorShader = Shader::Create(vsSourceReader.str(), fsSourceReader.str());
 
-        m_uniformBuffer = UniformBuffer::Create({
-                                                    {"u_ViewProjection", ShaderDatatype::Mat4},
-                                                },
-                                                0);
-        m_TileTexture = CreateRef<Ray::OpenGL::Texture2D>("Sandbox/assets/Textures/OIP.jpeg"s);
+        auto uniformBufferLayout = UniformBufferLayout{
+            {"u_ViewProjection", ShaderDatatype::Mat4},
+        };
+        m_uniformBuffer = UniformBuffer::Create(uniformBufferLayout, 0);
+        m_TileTexture = Texture2D::Create("Sandbox/assets/Textures/OIP.jpg"s);
     }
     SandboxLayer::~SandboxLayer()
     {

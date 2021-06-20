@@ -82,8 +82,7 @@ namespace Ray::OpenGL
     {
         int width, height, channels;
         stbi_set_flip_vertically_on_load(1);
-        stbi_uc *data = nullptr;
-        data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+        auto data = stbi_load(path.c_str(), &width, &height, &channels, 0);
         if (!data)
             throw std::runtime_error("Failed to load Image");
 
@@ -116,8 +115,8 @@ namespace Ray::OpenGL
         glCreateTextures(GL_TEXTURE_2D, 1, &m_rendererID);
         glTextureStorage2D(m_rendererID, 1, internalFormat, m_specs.Width, m_specs.Height);
 
-        glTextureParameteri(m_rendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTextureParameteri(m_rendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTextureParameteri(m_rendererID, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTextureParameteri(m_rendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         glTextureParameteri(m_rendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTextureParameteri(m_rendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
