@@ -1,6 +1,6 @@
 workspace "Ray"
 	architecture "x64"
-	startproject "RayUI"
+	startproject "Sandbox"
 
 	configurations {
 		"Debug",
@@ -30,3 +30,4 @@ group ""
 
 include "Ray"
 include "RayUI"
+include "Sandbox"

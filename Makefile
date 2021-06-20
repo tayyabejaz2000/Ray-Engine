@@ -14,6 +14,7 @@ ifeq ($(config),debug)
   glad_config = debug
   Ray_config = debug
   RayUI_config = debug
+  Sandbox_config = debug
 
 else ifeq ($(config),release)
   Premake_config = release
@@ -21,12 +22,13 @@ else ifeq ($(config),release)
   glad_config = release
   Ray_config = release
   RayUI_config = release
+  Sandbox_config = release
 
 else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := Premake GLFW glad Ray RayUI
+PROJECTS := Premake GLFW glad Ray RayUI Sandbox
 
 .PHONY: all clean help $(PROJECTS) Dependencies
 
@@ -64,12 +66,19 @@ ifneq (,$(RayUI_config))
 	@${MAKE} --no-print-directory -C RayUI -f Makefile config=$(RayUI_config)
 endif
 
+Sandbox: Ray GLFW glad
+ifneq (,$(Sandbox_config))
+	@echo "==== Building Sandbox ($(Sandbox_config)) ===="
+	@${MAKE} --no-print-directory -C Sandbox -f Makefile config=$(Sandbox_config)
+endif
+
 clean:
 	@${MAKE} --no-print-directory -C vendor/premake -f Makefile clean
 	@${MAKE} --no-print-directory -C Ray/vendor/GLFW -f Makefile clean
 	@${MAKE} --no-print-directory -C Ray/vendor/glad -f Makefile clean
 	@${MAKE} --no-print-directory -C Ray -f Makefile clean
 	@${MAKE} --no-print-directory -C RayUI -f Makefile clean
+	@${MAKE} --no-print-directory -C Sandbox -f Makefile clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -86,5 +95,6 @@ help:
 	@echo "   glad"
 	@echo "   Ray"
 	@echo "   RayUI"
+	@echo "   Sandbox"
 	@echo ""
 	@echo "For more information, see https://github.com/premake/premake-core/wiki"
