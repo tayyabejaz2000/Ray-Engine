@@ -4,20 +4,7 @@
 
 namespace Ray
 {
-    struct Texture2DSpecification
-    {
-        uint32_t Width, Height;
-
-        Texture::Format Format;
-
-        Texture::Wrap WrappingR = Texture::Wrap::REPEAT;
-        Texture::Wrap WrappingS = Texture::Wrap::REPEAT;
-        Texture::Wrap WrappingT = Texture::Wrap::REPEAT;
-
-        Texture::Filter MinFilter = Texture::Filter::LINEAR;
-        Texture::Filter MagFilter = Texture::Filter::LINEAR;
-    };
-
+    struct Texture2DSpecification;
     class Texture
     {
     public:
@@ -96,5 +83,19 @@ namespace Ray
     public:
         static Ref<Texture2D> Create(const Texture2DSpecification &);
         static Ref<Texture2D> Create(const std::string &);
+    };
+
+    struct Texture2DSpecification
+    {
+        uint32_t Width, Height;
+
+        Texture::Format Format;
+
+        Texture::Wrap WrappingR = Texture::Wrap::REPEAT;
+        Texture::Wrap WrappingS = Texture::Wrap::REPEAT;
+        Texture::Wrap WrappingT = Texture::Wrap::REPEAT;
+
+        Texture::Filter MinFilter = Texture::Filter::LINEAR;
+        Texture::Filter MagFilter = Texture::Filter::LINEAR;
     };
 }

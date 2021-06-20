@@ -4,62 +4,62 @@
 namespace Ray::OpenGL
 {
     uint32_t TextureSpecificationToGLTypes::s_formatLookup[] = {
-        [(uint32_t)TextureFormat::R8] = GL_R8,
-        [(uint32_t)TextureFormat::R8I] = GL_R8I,
-        [(uint32_t)TextureFormat::R32F] = GL_R32F,
+        [(uint32_t)Ray::Texture::Format::R8] = GL_R8,
+        [(uint32_t)Ray::Texture::Format::R8I] = GL_R8I,
+        [(uint32_t)Ray::Texture::Format::R32F] = GL_R32F,
 
-        [(uint32_t)TextureFormat::RG8] = GL_RG8,
-        [(uint32_t)TextureFormat::RG8I] = GL_RG8I,
-        [(uint32_t)TextureFormat::RG32F] = GL_RG32F,
+        [(uint32_t)Ray::Texture::Format::RG8] = GL_RG8,
+        [(uint32_t)Ray::Texture::Format::RG8I] = GL_RG8I,
+        [(uint32_t)Ray::Texture::Format::RG32F] = GL_RG32F,
 
-        [(uint32_t)TextureFormat::RGB8] = GL_RGB8,
-        [(uint32_t)TextureFormat::RGB32F] = GL_RGB32F,
+        [(uint32_t)Ray::Texture::Format::RGB8] = GL_RGB8,
+        [(uint32_t)Ray::Texture::Format::RGB32F] = GL_RGB32F,
 
-        [(uint32_t)TextureFormat::RGBA8] = GL_RGBA8,
-        [(uint32_t)TextureFormat::RGBA16] = GL_RGBA16,
-        [(uint32_t)TextureFormat::RGBA16F] = GL_RGBA16F,
-        [(uint32_t)TextureFormat::RGB32I] = GL_RGB32I,
-        [(uint32_t)TextureFormat::RGBA32F] = GL_RGBA32F,
+        [(uint32_t)Ray::Texture::Format::RGBA8] = GL_RGBA8,
+        [(uint32_t)Ray::Texture::Format::RGBA16] = GL_RGBA16,
+        [(uint32_t)Ray::Texture::Format::RGBA16F] = GL_RGBA16F,
+        [(uint32_t)Ray::Texture::Format::RGB32I] = GL_RGB32I,
+        [(uint32_t)Ray::Texture::Format::RGBA32F] = GL_RGBA32F,
 
-        [(uint32_t)TextureFormat::STENCIL8] = GL_STENCIL_INDEX8,
-        [(uint32_t)TextureFormat::DEPTH24STENCIL8] = GL_DEPTH24_STENCIL8,
-        [(uint32_t)TextureFormat::DEPTH32] = GL_DEPTH_COMPONENT32F, //Check this either GL_DEPTH or GL_DEPTH_COMPONENT32F
+        [(uint32_t)Ray::Texture::Format::STENCIL8] = GL_STENCIL_INDEX8,
+        [(uint32_t)Ray::Texture::Format::DEPTH24STENCIL8] = GL_DEPTH24_STENCIL8,
+        [(uint32_t)Ray::Texture::Format::DEPTH32] = GL_DEPTH_COMPONENT32F, //Check this either GL_DEPTH or GL_DEPTH_COMPONENT32F
     };
 
-    uint32_t TextureSpecificationToGLTypes::GetTextureWrapping(const TextureWrap &wrapping)
+    uint32_t TextureSpecificationToGLTypes::GetTextureWrapping(const Ray::Texture::Wrap &wrapping)
     {
         switch (wrapping)
         {
-        case TextureWrap::REPEAT:
+        case Ray::Texture::Wrap::REPEAT:
             return GL_REPEAT;
-        case TextureWrap::MIRRORED_REPEAT:
+        case Ray::Texture::Wrap::MIRRORED_REPEAT:
             return GL_MIRRORED_REPEAT;
-        case TextureWrap::CLAMP_TO_EDGE:
+        case Ray::Texture::Wrap::CLAMP_TO_EDGE:
             return GL_CLAMP_TO_EDGE;
-        case TextureWrap::MIRROR_CLAMP_TO_EDGE:
+        case Ray::Texture::Wrap::MIRROR_CLAMP_TO_EDGE:
             return GL_MIRROR_CLAMP_TO_EDGE;
-        case TextureWrap::CLAMP_TO_BORDER:
+        case Ray::Texture::Wrap::CLAMP_TO_BORDER:
             return GL_CLAMP_TO_BORDER;
         }
         return GL_NONE;
     }
-    uint32_t TextureSpecificationToGLTypes::GetTextureDataFormat(const TextureFormat &format)
+    uint32_t TextureSpecificationToGLTypes::GetTextureDataFormat(const Ray::Texture::Format &format)
     {
         switch (format)
         {
-        case TextureFormat::R8... TextureFormat::R32F:
+        case Ray::Texture::Format::R8... Ray::Texture::Format::R32F:
             return GL_RED;
-        case TextureFormat::RG8... TextureFormat::RG32F:
+        case Ray::Texture::Format::RG8... Ray::Texture::Format::RG32F:
             return GL_RG;
-        case TextureFormat::RGB8... TextureFormat::RGB32F:
+        case Ray::Texture::Format::RGB8... Ray::Texture::Format::RGB32F:
             return GL_RGB;
-        case TextureFormat::RGBA8... TextureFormat::RGBA32F:
+        case Ray::Texture::Format::RGBA8... Ray::Texture::Format::RGBA32F:
             return GL_RGBA;
-        case TextureFormat::STENCIL8:
+        case Ray::Texture::Format::STENCIL8:
             return GL_STENCIL;
-        case TextureFormat::DEPTH24STENCIL8:
+        case Ray::Texture::Format::DEPTH24STENCIL8:
             return GL_DEPTH_STENCIL;
-        case TextureFormat::DEPTH32:
+        case Ray::Texture::Format::DEPTH32:
             return GL_DEPTH;
         };
         return GL_NONE;

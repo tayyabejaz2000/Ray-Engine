@@ -10,9 +10,9 @@ namespace Ray::OpenGL
     class TextureSpecificationToGLTypes
     {
     public:
-        static uint32_t GetTextureWrapping(const TextureWrap &);
-        static uint32_t GetTextureDataFormat(const TextureFormat &);
-        static uint32_t GetTextureFormat(const TextureFormat &format) { return s_formatLookup[(uint32_t)format]; }
+        static uint32_t GetTextureWrapping(const Ray::Texture::Wrap &);
+        static uint32_t GetTextureDataFormat(const Ray::Texture::Format &);
+        static uint32_t GetTextureFormat(const Ray::Texture::Format &format) { return s_formatLookup[(uint32_t)format]; }
 
     private:
         static uint32_t s_formatLookup[];
