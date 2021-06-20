@@ -7,24 +7,17 @@
 #include "Core/Input.hpp"
 #include "Platform/APIs/OpenGL/Texture.hpp"
 
+#include <GL/gl.h>
+
 namespace Ray
 {
     static const auto maxBufferSize = 100000u;
-    struct Vertex
-    {
-        glm::vec3 position;
-        glm::vec4 color;
-        glm::vec2 texCoord;
-        float texIndex = 0.0f;
-        float tilingFactor = 1.0f;
-    };
-
     SandboxLayer::SandboxLayer() : Layer(), rand_dev(std::random_device{}()), dist(0.0f, 1.0f)
     {
-        glEnable(GL_POLYGON_SMOOTH);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glPointSize(5.0f);
+        glPointSize(2.0f);
+
         particlesBuffer.resize(maxBufferSize, ParticleVertex{});
         transforms.resize(maxBufferSize, glm::mat4(1.0f));
 
@@ -75,7 +68,7 @@ namespace Ray
             auto mousePos = glm::vec2(((pos.x) / screenX) * 2.0f - 1.0f, ((screenY - pos.y) / screenY) * 2.0f - 1.0f);
             for (auto &point : particlesBuffer)
             {
-                point.position.y -= dist(rand_dev) * 0.1f;
+                point.position.y -= dist(rand_dev) * 0.08f;
 
                 if (rand_dev() % 2 == 0)
                     point.position.x += dist(rand_dev) * 0.05f;

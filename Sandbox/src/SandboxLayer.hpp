@@ -35,8 +35,7 @@ namespace Ray
         std::mt19937 rand_dev;
         std::uniform_real_distribution<float> dist;
 
-        std::vector<ParticleVertex>
-            particlesBuffer;
+        std::vector<ParticleVertex> particlesBuffer;
         std::vector<glm::mat4> transforms;
     };
 }
