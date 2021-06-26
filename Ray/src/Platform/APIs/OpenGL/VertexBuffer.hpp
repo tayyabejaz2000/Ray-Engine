@@ -40,8 +40,9 @@ namespace Ray::OpenGL
         virtual void SetLayout(const VertexBufferLayout &layout) override { m_layout = layout; }
         virtual const VertexBufferLayout &GetLayout() const override { return m_layout; }
 
-        virtual void GetData(void *, std::size_t) const override;
         virtual void SetData(void *, std::size_t) override;
+
+        virtual intptr_t GetRendererID() const override { return m_rendererID; }
 
     private:
         uid_t m_rendererID;

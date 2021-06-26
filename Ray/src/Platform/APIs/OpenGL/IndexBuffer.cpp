@@ -28,10 +28,4 @@ namespace Ray::OpenGL
         glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
         glBufferData(GL_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
     }
-
-    void IndexBuffer::GetIndices(void *indices, std::size_t bufferSize) const
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
-        glGetBufferSubData(GL_ARRAY_BUFFER, 0, bufferSize, indices);
-    }
 }

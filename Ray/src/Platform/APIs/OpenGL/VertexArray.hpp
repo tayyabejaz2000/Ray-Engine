@@ -17,6 +17,8 @@ namespace Ray::OpenGL
         virtual void AddVertexBuffer(const Ref<Ray::VertexBuffer> &) override;
         virtual void SetIndexBuffer(const Ref<Ray::IndexBuffer> &) override;
 
+        virtual intptr_t GetRendererID() const override { return m_rendererID; }
+
     private:
         uid_t m_rendererID;
         uint32_t m_vertexBufferIndex;

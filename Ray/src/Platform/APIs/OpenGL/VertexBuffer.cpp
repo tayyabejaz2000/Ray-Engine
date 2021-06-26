@@ -160,12 +160,6 @@ namespace Ray::OpenGL
         glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
         glBufferSubData(GL_ARRAY_BUFFER, 0, dataSize, data);
     }
-    //Think about it (Would you ever need it)
-    void VertexBuffer::GetData(void *data, std::size_t bufferSize) const
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
-        glGetBufferSubData(GL_ARRAY_BUFFER, 0, bufferSize, data);
-    }
 
     uint32_t GetStride(const VertexBufferLayout &layout)
     {

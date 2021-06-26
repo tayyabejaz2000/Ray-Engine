@@ -14,6 +14,8 @@ namespace Ray::OpenGL
         virtual void Bind() const override;
         virtual void Unbind() const override;
 
+        virtual intptr_t GetRendererID() const override { return m_rendererID; }
+
     private:
         uid_t m_rendererID;
     };

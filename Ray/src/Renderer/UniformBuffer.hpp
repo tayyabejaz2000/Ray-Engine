@@ -30,6 +30,8 @@ namespace Ray
         //Set Uniform by Name in Uniform Buffer Layout
         virtual void UpdateUniform(const std::string &, void *) = 0;
 
+        virtual intptr_t GetRendererID() const = 0;
+
     public:
         static Ref<UniformBuffer> Create(const UniformBufferLayout &, uint32_t);
     };

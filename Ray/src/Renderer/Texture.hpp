@@ -8,37 +8,18 @@ namespace Ray
     class Texture
     {
     public:
-        Texture() = default;
-        virtual ~Texture() = default;
-
-        virtual const Texture2DSpecification &GetSpecifications() const = 0;
-
-        virtual void Bind(uint32_t = 0) const = 0;
-
-        virtual void Clear(uint32_t = 0) = 0;
-        virtual void SetData(void *, uint32_t) = 0;
-
-    public:
         enum Filter : uint8_t
         {
             NEAREST,
-            LINEAR,
-
-            //Mipmaps (Only Minifying Filter)
-            NEAREST_MIPMAP_NEAREST,
-            LINEAR_MIPMAP_NEAREST,
-            NEAREST_MIPMAP_LINEAR,
-            LINEAR_MIPMAP_LINEAR,
+            BILINEAR,
+            TRILINEAR,
         };
         enum Wrap : uint8_t
         {
             REPEAT,
-            MIRRORED_REPEAT,
-
-            CLAMP_TO_EDGE,
-            MIRROR_CLAMP_TO_EDGE,
-
-            CLAMP_TO_BORDER,
+            CLAMP,
+            MIRROR,
+            MIRROR_ONCE,
         };
         ///TODO: Support more format
         enum Format : uint8_t
@@ -46,43 +27,61 @@ namespace Ray
             //Color
             R8,
             R8I,
+            R32I,
             R32F,
 
             RG8,
             RG8I,
+            RG32I,
             RG32F,
 
             RGB8,
+            RGB8I,
+            RGB32I,
             RGB32F,
 
             RGBA8,
+            RGBA8I,
             RGBA16,
             RGBA16F,
-            RGB32I,
+            RGBA32I,
             RGBA32F,
 
             //Depth/Stencil
-            STENCIL8,
-            DEPTH24STENCIL8,
-            DEPTH32,
+            DEPTH,
+            DEPTH_STENCIL,
 
             //Defaults
-            DEPTH = DEPTH24STENCIL8,
+            RED_INTEGER = R32I,
 
-            RED_INTEGER = R8,
-
+            COLOR2 = RG8,
+            COLOR2F = RG32F,
             COLOR3 = RGB8,
             COLOR3F = RGB32F,
             COLOR4 = RGBA8,
             COLOR4F = RGBA32F,
         };
+
+    public:
+        Texture() = default;
+        virtual ~Texture() = default;
+
+        virtual void Bind(uint32_t = 0) const = 0;
+
+        virtual void Clear(int32_t = 0, uint8_t = 0) = 0;
+        virtual void SetData(void *, uint32_t, uint8_t = 0) = 0;
+
+        virtual intptr_t GetRendererID() const = 0;
     };
 
     class Texture2D : public Texture
     {
     public:
+        virtual const Texture2DSpecification &GetSpecifications() const = 0;
+
+    public:
         static Ref<Texture2D> Create(const Texture2DSpecification &);
-        static Ref<Texture2D> Create(const std::string &);
+        static Ref<Texture2D> Create(const std::string &, uint32_t = 0);
     };
 
     struct Texture2DSpecification
@@ -91,11 +90,12 @@ namespace Ray
 
         Texture::Format Format;
 
-        Texture::Wrap WrappingR = Texture::Wrap::REPEAT;
-        Texture::Wrap WrappingS = Texture::Wrap::REPEAT;
-        Texture::Wrap WrappingT = Texture::Wrap::REPEAT;
+        Texture::Wrap WrappingU = Texture::Wrap::REPEAT;
+        Texture::Wrap WrappingV = Texture::Wrap::REPEAT;
 
-        Texture::Filter MinFilter = Texture::Filter::LINEAR;
-        Texture::Filter MagFilter = Texture::Filter::LINEAR;
+        Texture::Filter MinFilter = Texture::Filter::NEAREST;
+        Texture::Filter MagFilter = Texture::Filter::NEAREST;
+
+        uint8_t Mipmaps = 0;
     };
 }

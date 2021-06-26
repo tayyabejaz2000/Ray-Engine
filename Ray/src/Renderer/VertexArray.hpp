@@ -19,6 +19,8 @@ namespace Ray
         virtual void AddVertexBuffer(const Ref<VertexBuffer> &) = 0;
         virtual void SetIndexBuffer(const Ref<IndexBuffer> &) = 0;
 
+        virtual intptr_t GetRendererID() const = 0;
+
     public:
         static Ref<VertexArray> Create();
 

@@ -9,58 +9,23 @@ namespace Ray
     {
         Texture::Format Format;
 
-        Texture::Wrap WrappingR = Texture::Wrap::CLAMP_TO_EDGE;
-        Texture::Wrap WrappingS = Texture::Wrap::CLAMP_TO_EDGE;
-        Texture::Wrap WrappingT = Texture::Wrap::CLAMP_TO_EDGE;
+        Texture::Wrap WrappingU = Texture::Wrap::REPEAT;
+        Texture::Wrap WrappingV = Texture::Wrap::REPEAT;
 
-        Texture::Filter MinFilter = Texture::Filter::LINEAR;
-        Texture::Filter MagFilter = Texture::Filter::LINEAR;
+        Texture::Filter MinFilter = Texture::Filter::NEAREST;
+        Texture::Filter MagFilter = Texture::Filter::NEAREST;
 
-        struct
-        {
-            uint32_t width = 0, height = 0;
-            uint32_t samples = 0;
-        } framebufferSpecs;
-    };
-    using ColorAttachmentsSpecifications = std::vector<FramebufferAttachmentSpecification>;
-
-    class ColorAttachments
-    {
-    public:
-        ColorAttachments() = default;
-        virtual ~ColorAttachments() = default;
-
-        virtual void Bind(uint32_t) = 0;
-
-        virtual void Clear(uint32_t, int32_t = 0) = 0;
-
-        virtual const ColorAttachmentsSpecifications &GetSpecifications() = 0;
-
-    public:
-        static Ref<ColorAttachments> Create(const ColorAttachmentsSpecifications &);
+        uint32_t Layers = 1;
     };
 
-    class DepthAttachment
-    {
-    public:
-        DepthAttachment() = default;
-        virtual ~DepthAttachment() = default;
-
-        virtual void Bind() = 0;
-
-        virtual void Clear(int32_t = 0) = 0;
-
-        virtual const FramebufferAttachmentSpecification &GetSpecification() = 0;
-
-    public:
-        static Ref<DepthAttachment> Create(const FramebufferAttachmentSpecification &);
-    };
+    using FramebufferAttachments = std::vector<FramebufferAttachmentSpecification>;
 
     struct FramebufferSpecification
     {
         uint32_t Width, Height;
-        std::optional<ColorAttachmentsSpecifications> ColorAttachmentsSpecs = std::nullopt;
-        std::optional<FramebufferAttachmentSpecification> DepthAttachmentSpecs = std::nullopt;
+
+        FramebufferAttachments Attachments;
+
         uint32_t Samples = 1;
 
         bool SwapChainTarget = false;
@@ -79,8 +44,7 @@ namespace Ray
         virtual void ClearColorAttachment(uint32_t, int32_t = 0) = 0;
         virtual void ClearDepthAttachment(int32_t = 0) = 0;
 
-        virtual const Ref<ColorAttachments> &GetColorAttachments() = 0;
-        virtual const Ref<DepthAttachment> &GetDepthAttachment() = 0;
+        virtual intptr_t GetRendererID() const = 0;
 
         virtual const FramebufferSpecification &GetSpecification() const = 0;
 

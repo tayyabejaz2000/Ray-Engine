@@ -81,7 +81,8 @@ namespace Ray
         virtual const VertexBufferLayout &GetLayout() const = 0;
 
         virtual void SetData(void *, std::size_t) = 0;
-        virtual void GetData(void *, std::size_t) const = 0;
+
+        virtual intptr_t GetRendererID() const = 0;
 
     public:
         static Ref<VertexBuffer> Create(std::size_t);
@@ -98,7 +99,8 @@ namespace Ray
         virtual void Unbind() const = 0;
 
         virtual void SetIndices(void *, std::size_t) = 0;
-        virtual void GetIndices(void *, std::size_t) const = 0;
+
+        virtual intptr_t GetRendererID() const = 0;
 
     public:
         static Ref<IndexBuffer> Create(void *, std::size_t);

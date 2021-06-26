@@ -20,6 +20,8 @@ namespace Ray::OpenGL
 
         virtual const UniformBufferLayout &GetLayout() const override { return m_layout; }
 
+        virtual intptr_t GetRendererID() const override { return m_rendererID; }
+
     private:
         uid_t m_rendererID;
 
