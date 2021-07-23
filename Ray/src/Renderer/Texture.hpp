@@ -4,7 +4,6 @@
 
 namespace Ray
 {
-    struct Texture2DSpecification;
     class Texture
     {
     public:
@@ -74,16 +73,6 @@ namespace Ray
         virtual intptr_t GetRendererID() const = 0;
     };
 
-    class Texture2D : public Texture
-    {
-    public:
-        virtual const Texture2DSpecification &GetSpecifications() const = 0;
-
-    public:
-        static Ref<Texture2D> Create(const Texture2DSpecification &);
-        static Ref<Texture2D> Create(const std::string &, uint32_t = 0);
-    };
-
     struct Texture2DSpecification
     {
         uint32_t Width, Height;
@@ -97,5 +86,15 @@ namespace Ray
         Texture::Filter MagFilter = Texture::Filter::NEAREST;
 
         uint8_t Mipmaps = 0;
+    };
+
+    class Texture2D : public Texture
+    {
+    public:
+        virtual const Texture2DSpecification &GetSpecifications() const = 0;
+
+    public:
+        static Ref<Texture2D> Create(const Texture2DSpecification &);
+        static Ref<Texture2D> Create(const std::string &, uint32_t = 0);
     };
 }

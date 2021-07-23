@@ -1,13 +1,12 @@
 #pragma once
 
 #include "Core/Core.hpp"
-#include "Core/RayObject.hpp"
 
 #include "Renderer/Buffer.hpp"
 
 namespace Ray
 {
-    class RAYAPI VertexArray : public RayObject
+    class RAYAPI VertexArray
     {
     public:
         VertexArray() = default;

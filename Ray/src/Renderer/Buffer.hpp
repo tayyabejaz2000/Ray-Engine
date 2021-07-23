@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core/Core.hpp"
-#include "Core/RayObject.hpp"
 
 namespace Ray
 {
@@ -68,7 +67,7 @@ namespace Ray
 
     using VertexBufferLayout = std::vector<VertexBufferLayoutElement>;
 
-    class RAYAPI VertexBuffer : public RayObject
+    class RAYAPI VertexBuffer
     {
     public:
         VertexBuffer() = default;
@@ -89,7 +88,7 @@ namespace Ray
         static Ref<VertexBuffer> Create(void *, std::size_t);
     };
 
-    class RAYAPI IndexBuffer : public RayObject
+    class RAYAPI IndexBuffer
     {
     public:
         IndexBuffer() = default;

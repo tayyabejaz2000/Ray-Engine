@@ -17,6 +17,7 @@ namespace Ray
         LinuxWindow(const WindowSpecifications &);
         virtual ~LinuxWindow();
 
+        virtual void Resize(uint32_t, uint32_t) override;
         virtual void VSync(bool) override;
         virtual void OnUpdate() override;
         virtual bool IsRunning() override;

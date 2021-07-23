@@ -44,6 +44,9 @@ namespace Ray
         virtual void ClearColorAttachment(uint32_t, int32_t = 0) = 0;
         virtual void ClearDepthAttachment(int32_t = 0) = 0;
 
+        virtual const std::vector<Ref<Ray::Texture2D>> &GetColorAttachments() = 0;
+        virtual const Ref<Ray::Texture2D> &GetDepthAttachment() = 0;
+
         virtual intptr_t GetRendererID() const = 0;
 
         virtual const FramebufferSpecification &GetSpecification() const = 0;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/Core.hpp"
-#include "Core/LayerStack.hpp"
+#include "Core/Application.hpp"
 
 #include "Event.hpp"
 #include "KeyEvents.hpp"

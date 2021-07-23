@@ -11,8 +11,8 @@ namespace Ray
 {
     Window::Window(const WindowSpecifications &specs) : m_specs(specs)
     {
-        if (!s_Window)
-            s_Window = this;
+        if (!s_window)
+            s_window = this;
         else
             throw std::runtime_error("Window Already created");
     }
