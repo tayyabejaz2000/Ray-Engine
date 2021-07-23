@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core/Core.hpp"
-#include "Core/RayObject.hpp"
 
 namespace Ray
 {
@@ -35,7 +34,7 @@ namespace Ray
         WINDOW = 0b0001111000000000,
     };
 
-    class RAYAPI Event : public RayObject
+    class RAYAPI Event
     {
     public:
         Event() : handled(false) {}

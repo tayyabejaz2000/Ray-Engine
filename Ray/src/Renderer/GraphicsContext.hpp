@@ -1,11 +1,10 @@
 #pragma once
 
 #include "Core/Core.hpp"
-#include "Core/RayObject.hpp"
 
 namespace Ray
 {
-    class RAYAPI GraphicsContext : public RayObject
+    class RAYAPI GraphicsContext
     {
     public:
         GraphicsContext() = default;

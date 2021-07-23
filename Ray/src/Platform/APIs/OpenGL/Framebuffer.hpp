@@ -26,6 +26,9 @@ namespace Ray::OpenGL
                 std::dynamic_pointer_cast<Ray::OpenGL::Texture2D>(m_depthAttachment)->Clear(value);
         }
 
+        virtual const std::vector<Ref<Ray::Texture2D>> &GetColorAttachments() override { return m_colorAttachments; }
+        virtual const Ref<Ray::Texture2D> &GetDepthAttachment() override { return m_depthAttachment; }
+
         virtual intptr_t GetRendererID() const override { return m_rendererID; }
 
         virtual const FramebufferSpecification &GetSpecification() const override { return m_specs; }

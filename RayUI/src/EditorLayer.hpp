@@ -12,7 +12,8 @@ namespace Ray
 
         virtual void OnUpdate(float delta_time) override;
 
-        virtual void OnEvent(KeyEvent&) override;
+        virtual void OnEvent(KeyEvent &) override;
+
     private:
     };
 }
