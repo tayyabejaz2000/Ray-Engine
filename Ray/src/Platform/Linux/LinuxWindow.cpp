@@ -74,6 +74,11 @@ namespace Ray
         Shutdown();
         glfwTerminate();
     }
+    void LinuxWindow::Resize(uint32_t width, uint32_t height)
+    {
+        m_specs.width = width;
+        m_specs.height = height;
+    }
     void LinuxWindow::VSync(bool enabled)
     {
         if (enabled)

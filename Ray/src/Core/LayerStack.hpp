@@ -8,26 +8,26 @@ namespace Ray
     class RAYAPI LayerStack
     {
     public:
-        static void PushLayer(const Ref<Layer> &);
-        static void PushOverlay(const Ref<Layer> &);
-        static Ref<Layer> PopLayer(const Ref<Layer> &);
-        static Ref<Layer> PopOverlay(const Ref<Layer> &);
+        void PushLayer(const Ref<Layer> &);
+        void PushOverlay(const Ref<Layer> &);
+        Ref<Layer> PopLayer(const Ref<Layer> &);
+        Ref<Layer> PopOverlay(const Ref<Layer> &);
 
-        static inline std::vector<Ref<Layer>> &GetLayers() { return s_layers; }
-        static inline std::vector<Ref<Layer>> &GetOverlays() { return s_overlays; }
+        inline std::vector<Ref<Layer>> &GetLayers() { return m_layers; }
+        inline std::vector<Ref<Layer>> &GetOverlays() { return m_overlays; }
 
-        static void ForEach(std::function<void(Ref<Layer> &)>);
-        static void ForEachLayer(std::function<void(Ref<Layer> &)>);
-        static void ForEachOverlay(std::function<void(Ref<Layer> &)>);
-        static void ForEachReverse(std::function<void(Ref<Layer> &)>);
-        static void ForEachLayerReverse(std::function<void(Ref<Layer> &)>);
-        static void ForEachOverlayReverse(std::function<void(Ref<Layer> &)>);
+        void ForEach(std::function<void(Ref<Layer> &)>);
+        void ForEachLayer(std::function<void(Ref<Layer> &)>);
+        void ForEachOverlay(std::function<void(Ref<Layer> &)>);
+        void ForEachReverse(std::function<void(Ref<Layer> &)>);
+        void ForEachLayerReverse(std::function<void(Ref<Layer> &)>);
+        void ForEachOverlayReverse(std::function<void(Ref<Layer> &)>);
 
-        static void OnUpdate(float);
-        static void OnDetach();
+        void OnUpdate(float);
+        void OnDetach();
 
     private:
-        static std::vector<Ref<Layer>> s_layers;
-        static std::vector<Ref<Layer>> s_overlays;
+        std::vector<Ref<Layer>> m_layers;
+        std::vector<Ref<Layer>> m_overlays;
     };
 }

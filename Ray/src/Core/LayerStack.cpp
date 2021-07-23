@@ -2,26 +2,23 @@
 
 namespace Ray
 {
-    std::vector<Ref<Layer>> LayerStack::s_layers;
-    std::vector<Ref<Layer>> LayerStack::s_overlays;
-
     void LayerStack::PushLayer(const Ref<Layer> &layer)
     {
         layer->OnAttach();
-        s_layers.push_back(layer);
+        m_layers.push_back(layer);
     }
     void LayerStack::PushOverlay(const Ref<Layer> &layer)
     {
         layer->OnAttach();
-        s_overlays.push_back(layer);
+        m_overlays.push_back(layer);
     }
     Ref<Layer> LayerStack::PopLayer(const Ref<Layer> &layer)
     {
-        auto it = std::find(s_layers.begin(), s_layers.end(), layer);
-        if (it != s_layers.end())
+        auto it = std::find(m_layers.begin(), m_layers.end(), layer);
+        if (it != m_layers.end())
         {
             auto popped_layer = *it;
-            s_layers.erase(it);
+            m_layers.erase(it);
             popped_layer->OnDetach();
             return popped_layer;
         }
@@ -29,11 +26,11 @@ namespace Ray
     }
     Ref<Layer> LayerStack::PopOverlay(const Ref<Layer> &layer)
     {
-        auto it = std::find(s_overlays.begin(), s_overlays.end(), layer);
-        if (it != s_overlays.end())
+        auto it = std::find(m_overlays.begin(), m_overlays.end(), layer);
+        if (it != m_overlays.end())
         {
             auto popped_overlay = *it;
-            s_overlays.erase(it);
+            m_overlays.erase(it);
             popped_overlay->OnDetach();
             return popped_overlay;
         }
@@ -42,11 +39,11 @@ namespace Ray
 
     void LayerStack::ForEachLayer(std::function<void(Ref<Layer> &)> func)
     {
-        std::for_each(s_layers.begin(), s_layers.end(), func);
+        std::for_each(m_layers.begin(), m_layers.end(), func);
     }
     void LayerStack::ForEachOverlay(std::function<void(Ref<Layer> &)> func)
     {
-        std::for_each(s_overlays.begin(), s_overlays.end(), func);
+        std::for_each(m_overlays.begin(), m_overlays.end(), func);
     }
     void LayerStack::ForEach(std::function<void(Ref<Layer> &)> func)
     {
@@ -55,11 +52,11 @@ namespace Ray
     }
     void LayerStack::ForEachLayerReverse(std::function<void(Ref<Layer> &)> func)
     {
-        std::for_each(s_layers.rbegin(), s_layers.rend(), func);
+        std::for_each(m_layers.rbegin(), m_layers.rend(), func);
     }
     void LayerStack::ForEachOverlayReverse(std::function<void(Ref<Layer> &)> func)
     {
-        std::for_each(s_overlays.rbegin(), s_overlays.rend(), func);
+        std::for_each(m_overlays.rbegin(), m_overlays.rend(), func);
     }
     void LayerStack::ForEachReverse(std::function<void(Ref<Layer> &)> func)
     {
@@ -69,9 +66,9 @@ namespace Ray
 
     void LayerStack::OnUpdate(float deltaTime)
     {
-        for (auto it = s_layers.rbegin(); it != s_layers.rend(); ++it)
+        for (auto it = m_layers.rbegin(); it != m_layers.rend(); ++it)
             (*it)->OnUpdate(deltaTime);
-        for (auto it = s_overlays.rbegin(); it != s_overlays.rend(); ++it)
+        for (auto it = m_overlays.rbegin(); it != m_overlays.rend(); ++it)
             (*it)->OnUpdate(deltaTime);
     }
 

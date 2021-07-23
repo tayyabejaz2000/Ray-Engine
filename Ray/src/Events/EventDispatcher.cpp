@@ -19,13 +19,16 @@ namespace Ray
 
     void EventDispatcher::Dispatch(KeyEvent &e) const
     {
-        for (auto &overlay : LayerStack::GetOverlays())
+        auto &layers = Application::GetApplication().GetLayerStack().GetLayers();
+        auto &overlays = Application::GetApplication().GetLayerStack().GetOverlays();
+
+        for (auto &overlay : overlays)
         {
             overlay->OnEvent(e);
             if (e.handled)
                 return;
         }
-        for (auto &layer : LayerStack::GetLayers())
+        for (auto &layer : layers)
         {
             layer->OnEvent(e);
             if (e.handled)
@@ -34,13 +37,16 @@ namespace Ray
     }
     void EventDispatcher::Dispatch(MouseScrolledEvent &e) const
     {
-        for (auto &overlay : LayerStack::GetOverlays())
+        auto &layers = Application::GetApplication().GetLayerStack().GetLayers();
+        auto &overlays = Application::GetApplication().GetLayerStack().GetOverlays();
+
+        for (auto &overlay : overlays)
         {
             overlay->OnEvent(e);
             if (e.handled)
                 return;
         }
-        for (auto &layer : LayerStack::GetLayers())
+        for (auto &layer : layers)
         {
             layer->OnEvent(e);
             if (e.handled)
@@ -49,13 +55,16 @@ namespace Ray
     }
     void EventDispatcher::Dispatch(MouseButtonEvent &e) const
     {
-        for (auto &overlay : LayerStack::GetOverlays())
+        auto &layers = Application::GetApplication().GetLayerStack().GetLayers();
+        auto &overlays = Application::GetApplication().GetLayerStack().GetOverlays();
+
+        for (auto &overlay : overlays)
         {
             overlay->OnEvent(e);
             if (e.handled)
                 return;
         }
-        for (auto &layer : LayerStack::GetLayers())
+        for (auto &layer : layers)
         {
             layer->OnEvent(e);
             if (e.handled)
@@ -65,13 +74,16 @@ namespace Ray
 
     void EventDispatcher::Dispatch(WindowResizeEvent &e) const
     {
-        for (auto &overlay : LayerStack::GetOverlays())
+        auto &layers = Application::GetApplication().GetLayerStack().GetLayers();
+        auto &overlays = Application::GetApplication().GetLayerStack().GetOverlays();
+
+        for (auto &overlay : overlays)
         {
             overlay->OnEvent(e);
             if (e.handled)
                 return;
         }
-        for (auto &layer : LayerStack::GetLayers())
+        for (auto &layer : layers)
         {
             layer->OnEvent(e);
             if (e.handled)
@@ -80,13 +92,16 @@ namespace Ray
     }
     void EventDispatcher::Dispatch(WindowMinimizeEvent &e) const
     {
-        for (auto &overlay : LayerStack::GetOverlays())
+        auto &layers = Application::GetApplication().GetLayerStack().GetLayers();
+        auto &overlays = Application::GetApplication().GetLayerStack().GetOverlays();
+
+        for (auto &overlay : overlays)
         {
             overlay->OnEvent(e);
             if (e.handled)
                 return;
         }
-        for (auto &layer : LayerStack::GetLayers())
+        for (auto &layer : layers)
         {
             layer->OnEvent(e);
             if (e.handled)
@@ -95,13 +110,16 @@ namespace Ray
     }
     void EventDispatcher::Dispatch(WindowCloseEvent &e) const
     {
-        for (auto &overlay : LayerStack::GetOverlays())
+        auto &layers = Application::GetApplication().GetLayerStack().GetLayers();
+        auto &overlays = Application::GetApplication().GetLayerStack().GetOverlays();
+
+        for (auto &overlay : overlays)
         {
             overlay->OnEvent(e);
             if (e.handled)
                 return;
         }
-        for (auto &layer : LayerStack::GetLayers())
+        for (auto &layer : layers)
         {
             layer->OnEvent(e);
             if (e.handled)

@@ -16,6 +16,7 @@ namespace Ray
         WindowSpecifications &GetSpecifications();
         bool VSync() { return m_specs.vsync; }
 
+        virtual void Resize(uint32_t, uint32_t) = 0;
         virtual void VSync(bool) = 0;
         virtual void OnUpdate() = 0;
         virtual bool IsRunning() = 0;
@@ -24,7 +25,7 @@ namespace Ray
         static Object<Window> Create(const WindowSpecifications &);
 
     private:
-        Window *s_Window;
+        Window *s_window;
 
     protected:
         WindowSpecifications m_specs;
