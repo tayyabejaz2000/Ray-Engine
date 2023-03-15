@@ -7,12 +7,6 @@ workspace "Ray"
 		"Release"
 	}
 
-	platforms {
-		"Windows",
-		"Linux",
-	}
-
-
 	flags {
 		"MultiProcessorCompile"
 	}
