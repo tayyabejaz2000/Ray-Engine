@@ -4,3 +4,7 @@
 /obj
 
 Makefile
+
+*.sln
+*.vcxproj
+*.vcxproj.filters
