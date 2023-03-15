@@ -59,7 +59,7 @@ namespace Ray
     class RAYAPI KeyTypedEvent : public KeyEvent
     {
     public:
-        KeyTypedEvent(uint scancode) : KeyEvent(scancode) {}
+        KeyTypedEvent(unsigned int scancode) : KeyEvent(scancode) {}
         virtual const EventType GetEventType() const override { return EventType::KEY_TYPED_EVENT; }
 
         virtual std::string ToString() const

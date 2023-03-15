@@ -114,8 +114,8 @@ namespace Ray
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-        glfwWindowHint(GLFW_SAMPLES, (int)m_specs.samples);            //Setup Anti-Aliasing Samples
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //Setup OpenGL Core Profile
+        glfwWindowHint(GLFW_SAMPLES, (int)m_specs.samples);            // Setup Anti-Aliasing Samples
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // Setup OpenGL Core Profile
 
 #ifdef RAY_DEBUG
         glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
@@ -124,11 +124,11 @@ namespace Ray
 #endif
 
         m_windowHandle = glfwCreateWindow(
-            m_specs.width,        //Width of Window
-            m_specs.height,       //Height of Window
-            m_specs.title.data(), //Title of Window
-            nullptr,              //Monitor to display the window (nullptr in this case)
-            nullptr);             //Parent for current Window (nullptr in this case)
+            m_specs.width,        // Width of Window
+            m_specs.height,       // Height of Window
+            m_specs.title.data(), // Title of Window
+            nullptr,              // Monitor to display the window (nullptr in this case)
+            nullptr);             // Parent for current Window (nullptr in this case)
 
         m_context = GraphicsContext::Create(m_windowHandle);
         m_context->Init();
@@ -158,14 +158,12 @@ namespace Ray
                                    EventDispatcher::GetEventDispatcher()->Dispatch(e);
                                }
                                break;
-                               };
-                           });
+                               }; });
 
-        glfwSetCharCallback(m_windowHandle, [](GLFWwindow *window, uint scancode)
+        glfwSetCharCallback(m_windowHandle, [](GLFWwindow *window, unsigned int scancode)
                             {
                                 KeyTypedEvent e(scancode);
-                                EventDispatcher::GetEventDispatcher()->Dispatch(e);
-                            });
+                                EventDispatcher::GetEventDispatcher()->Dispatch(e); });
 
         glfwSetMouseButtonCallback(m_windowHandle, [](GLFWwindow *window, int button, int action, int mods)
                                    {
@@ -181,8 +179,7 @@ namespace Ray
                                        {
                                            MouseButtonReleasedEvent e(mousePos, RayMouseButtonCast(button), RayKeyModifierCast(mods));
                                            EventDispatcher::GetEventDispatcher()->Dispatch(e);
-                                       }
-                                   });
+                                       } });
         glfwSetScrollCallback(m_windowHandle, [](GLFWwindow *window, double xOffset, double yOffset)
                               {
                                   double x, y;
@@ -190,8 +187,7 @@ namespace Ray
                                   MouseScrolledEvent e(
                                       {static_cast<float>(x), static_cast<float>(y)},
                                       {static_cast<float>(xOffset), static_cast<float>(yOffset)});
-                                  EventDispatcher::GetEventDispatcher()->Dispatch(e);
-                              });
+                                  EventDispatcher::GetEventDispatcher()->Dispatch(e); });
 
         glfwSetWindowSizeCallback(m_windowHandle, [](GLFWwindow *window, int width, int height)
                                   {
@@ -204,14 +200,12 @@ namespace Ray
                                       {
                                           WindowResizeEvent e((uint16_t)width, (uint16_t)height);
                                           EventDispatcher::GetEventDispatcher()->Dispatch(e);
-                                      }
-                                  });
+                                      } });
 
         glfwSetWindowCloseCallback(m_windowHandle, [](GLFWwindow *window)
                                    {
                                        WindowCloseEvent e;
-                                       EventDispatcher::GetEventDispatcher()->Dispatch(e);
-                                   });
+                                       EventDispatcher::GetEventDispatcher()->Dispatch(e); });
 
         VSync(m_specs.vsync);
     }
