@@ -32,17 +32,20 @@ namespace Ray
     }
     void Application::Run()
     {
+        //std::function<void(WindowResizeEvent &)> temp = Application::OnEvent;
+        void (Application::*temp)(Ray::WindowMinimizeEvent &) = Application::OnEvent;
+
         auto lastFrameTime = std::chrono::system_clock::now();
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         while (m_running)
         {
             auto currentTime = std::chrono::system_clock::now();
-            auto deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(currentTime - lastFrameTime).count() / 1000.0f;
+            auto deltaTime = (currentTime - lastFrameTime).count() / 1e6f;
             lastFrameTime = currentTime;
             if (!m_minimized)
             {
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                m_layerStack.OnUpdate(deltaTime);
+                GetLayerStack().OnUpdate(deltaTime);
             }
             GetWindow().OnUpdate();
         }
@@ -50,27 +53,28 @@ namespace Ray
 
     void Application::OnEvent(WindowMinimizeEvent &e)
     {
-        GetWindow().Resize(0, 0);
         m_minimized = true;
         e.handled = true;
+        GetWindow().Minimize();
     }
 
     void Application::OnEvent(WindowResizeEvent &e)
     {
-        GetWindow().Resize(e.width, e.height);
         m_minimized = false;
         e.handled = true;
+        GetWindow().Resize(e.width, e.height);
     }
 
     void Application::OnEvent(WindowCloseEvent &e)
     {
         m_running = false;
         e.handled = true;
-        m_layerStack.OnDetach();
+        GetLayerStack().OnDetach();
     }
 
     Application &Application::GetApplication()
     {
         return *s_application;
     }
+
 }

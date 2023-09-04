@@ -9,13 +9,8 @@
 
 namespace Ray
 {
-    Window::Window(const WindowSpecifications &specs) : m_specs(specs)
-    {
-        if (!s_window)
-            s_window = this;
-        else
-            throw std::runtime_error("Window Already created");
-    }
+    uint16_t Window::Instances = 0;
+
     Object<Window> Window::Create(const WindowSpecifications &specs)
     {
 #ifdef RAY_PLATFORM_LINUX
@@ -23,10 +18,5 @@ namespace Ray
 #else
         return nullptr;
 #endif
-    }
-
-    WindowSpecifications &Window::GetSpecifications()
-    {
-        return m_specs;
     }
 }

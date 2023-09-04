@@ -65,19 +65,61 @@ namespace Ray
         std::cout << "\n---------------------opengl-callback-end---------------------\n";
     }
 
-    LinuxWindow::LinuxWindow(const WindowSpecifications &w) : Window(w)
+    LinuxWindow::LinuxWindow(const WindowSpecifications &w, Window &shared) : m_specs(w), m_sharedWindow(&shared)
     {
-        Init(w);
+        Init();
+    }
+    LinuxWindow::LinuxWindow(const WindowSpecifications &w) : m_specs(w), m_sharedWindow(nullptr)
+    {
+        Init();
     }
     LinuxWindow::~LinuxWindow()
     {
         Shutdown();
-        glfwTerminate();
+        if (Window::Instances == 1)
+            glfwTerminate();
+    }
+    void LinuxWindow::Minimize()
+    {
+        m_specs.width = 0;
+        m_specs.height = 0;
+        glfwIconifyWindow(m_windowHandle);
+    }
+    void LinuxWindow::Maximize()
+    {
+        glfwMaximizeWindow(m_windowHandle);
+        int width, height;
+        glfwGetWindowSize(m_windowHandle, &width, &height);
+        m_specs.width = width;
+        m_specs.height = height;
+    }
+    void LinuxWindow::Restore()
+    {
+        glfwRestoreWindow(m_windowHandle);
+        int width, height;
+        glfwGetWindowSize(m_windowHandle, &width, &height);
+        m_specs.width = width;
+        m_specs.height = height;
     }
     void LinuxWindow::Resize(uint32_t width, uint32_t height)
     {
         m_specs.width = width;
         m_specs.height = height;
+        glfwSetWindowSize(m_windowHandle, m_specs.width, m_specs.height);
+    }
+    void LinuxWindow::Move(uint32_t x, uint32_t y)
+    {
+        glfwSetWindowPos(m_windowHandle, x, y);
+    }
+    void LinuxWindow::Close()
+    {
+        WindowCloseEvent e;
+        EventDispatcher::GetEventDispatcher()->Dispatch(e);
+        glfwSetWindowShouldClose(m_windowHandle, GLFW_TRUE);
+    }
+    bool LinuxWindow::IsOpen()
+    {
+        return !static_cast<bool>(glfwWindowShouldClose(m_windowHandle));
     }
     void LinuxWindow::VSync(bool enabled)
     {
@@ -92,10 +134,7 @@ namespace Ray
         m_context->SwapBuffers();
         glfwPollEvents();
     }
-    bool LinuxWindow::IsRunning()
-    {
-        return !(glfwWindowShouldClose(m_windowHandle));
-    }
+
     void *LinuxWindow::GetNativeWindowHandle()
     {
         return reinterpret_cast<void *>(m_windowHandle);
@@ -105,12 +144,14 @@ namespace Ray
         if (!glfwInit())
             throw std::runtime_error("Failed to Initialize GLFW");
     }
-    void LinuxWindow::Init(const WindowSpecifications &specs)
+    void LinuxWindow::Init()
     {
-        InitGLFW();
-
-        glfwSetErrorCallback([](int errorCode, const char *log)
-                             { std::cout << log << '\n'; });
+        if (Window::Instances == 1)
+        {
+            InitGLFW();
+            glfwSetErrorCallback([](int errorCode, const char *log)
+                                 { std::cout << log << '\n'; });
+        }
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
@@ -122,13 +163,14 @@ namespace Ray
         if (glDebugMessageCallback)
             glDebugMessageCallback(GLDebugProc, NULL);
 #endif
-
         m_windowHandle = glfwCreateWindow(
             m_specs.width,        //Width of Window
             m_specs.height,       //Height of Window
             m_specs.title.data(), //Title of Window
             nullptr,              //Monitor to display the window (nullptr in this case)
-            nullptr);             //Parent for current Window (nullptr in this case)
+            m_sharedWindow        //Share Window Resources
+                ? static_cast<GLFWwindow *>(m_sharedWindow->GetNativeWindowHandle())
+                : nullptr);
 
         m_context = GraphicsContext::Create(m_windowHandle);
         m_context->Init();

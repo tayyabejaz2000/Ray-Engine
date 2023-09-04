@@ -28,9 +28,8 @@ namespace Ray
 
         inline Window &GetWindow() { return *m_window; }
 
+    public:
         static Application &GetApplication();
-
-        friend int main(int argc, char **argv, char **envp);
 
     private:
         bool m_running, m_minimized;
@@ -39,6 +38,8 @@ namespace Ray
 
     private:
         static Application *s_application;
+
+        friend int main(int, char **, char **);
     };
     Object<Application> CreateApplication();
 }

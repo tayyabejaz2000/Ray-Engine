@@ -265,11 +265,11 @@ namespace Ray
   };
 
   static const KeyModifier GLFW_Key_Mods[] = {
-      [GLFW_MOD_SHIFT >> 1] = KeyModifier::ALT,
-      [GLFW_MOD_CONTROL >> 1] = KeyModifier::ALT,
+      [GLFW_MOD_SHIFT >> 1] = KeyModifier::SHIFT,
+      [GLFW_MOD_CONTROL >> 1] = KeyModifier::CTRL,
       [GLFW_MOD_ALT >> 1] = KeyModifier::ALT,
       [3] = KeyModifier::NO_MODIFIER,
-      [GLFW_MOD_SUPER >> 1] = KeyModifier::ALT,
+      [GLFW_MOD_SUPER >> 1] = KeyModifier::SUPER,
   };
 
   inline const Key RAYAPI RayKeyCast(int32_t glfw_key)

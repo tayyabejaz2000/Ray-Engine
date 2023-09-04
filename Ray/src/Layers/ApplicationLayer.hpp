@@ -12,6 +12,7 @@ namespace Ray
         ApplicationLayer();
         virtual ~ApplicationLayer() = default;
 
+        virtual void OnEvent(KeyEvent &) override;
         //virtual void OnUpdate(float delta_time) override;
         virtual void OnEvent(WindowCloseEvent &e) override;
         virtual void OnEvent(WindowResizeEvent &e) override;
