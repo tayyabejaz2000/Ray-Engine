@@ -17,7 +17,7 @@ namespace Ray::OpenGL
         static uint32_t GetTextureComponentCount(const Ray::Texture::Format &format) { return static_cast<uint32_t>(s_componentCountLookup[(uint32_t)format]); }
 
     private:
-        //Can save memory by dynamically allocating depending on the Graphics Library being used.
+        // Can save memory by dynamically allocating depending on the Graphics Library being used.
         static uint32_t s_formatLookup[];
         static uint8_t s_componentCountLookup[];
     };
@@ -47,7 +47,7 @@ namespace Ray::OpenGL
         void Release();
 
     private:
-        uid_t m_rendererID;
+        unsigned int m_rendererID;
         Texture2DSpecification m_specs;
         uint8_t m_samples;
     };

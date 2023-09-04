@@ -1,7 +1,7 @@
 project "RayUI"
 	kind "ConsoleApp"
 	language "C++"
-	cppdialect "C++17"
+	cppdialect "C++20"
 	staticruntime "on"
 
 	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
@@ -18,15 +18,24 @@ project "RayUI"
 		"%{IncludeDir.spdlog}",
 	}
 
-	links {
-		"Ray",
-        "GL",
-		"pthread",
-        "GLFW",
-        "glad",
-        "X11",
-		"dl",
-    }
+	filter "system:windows"
+		links {
+			"Ray",
+			"GL",
+			"GLFW",
+			"glad",
+			"dl",
+		}
+	filter "system:linux"
+		links {
+			"Ray",
+			"GL",
+			"pthread",
+			"GLFW",
+			"glad",
+			"X11",
+			"dl",
+		}
 
 	filter "configurations:Debug"
 		defines "RAY_DEBUG"

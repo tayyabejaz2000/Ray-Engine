@@ -1,6 +1,11 @@
 /.vscode
 
-/bin
-/obj
+**/bin
+**/bin-int
+**/obj
 
 Makefile
+
+*.sln
+*.vcxproj
+*.vcxproj.filters

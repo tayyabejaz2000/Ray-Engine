@@ -1,7 +1,7 @@
 project "Ray"
     kind "SharedLib"
     language "C++"
-    cppdialect "C++17"
+    cppdialect "C++20"
     staticruntime "on"
     if (kind == "SharedLib") then
 		staticruntime "off"
@@ -10,8 +10,12 @@ project "Ray"
     targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
     objdir ("%{wks.location}/obj/" .. outputdir .. "/%{prj.name}")
 
-    pchheader "src/raypch.hpp"
-    pchsource "src/raypch.cpp"
+	filter "system:windows"
+        pchheader "src\\raypch.hpp"
+        pchsource "src\\raypch.cpp"
+	filter "system:linux"
+        pchheader "src/raypch.hpp"
+        pchsource "src/raypch.cpp"
 
     files {
         "src/**.hpp",

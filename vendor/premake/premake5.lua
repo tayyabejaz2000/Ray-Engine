@@ -9,6 +9,11 @@ project "Premake"
 	}
 	
 	postbuildmessage "Regenerating project files with Premake5!"
-	postbuildcommands {
-		"./bin/premake5 %{_ACTION} --file=\"%{wks.location}/premake5.lua\""
-	}
+	filter "system:windows"
+		postbuildcommands {
+			"bin\\Windows\\premake5.exe %{_ACTION} --file=\"%{wks.location}\\premake5.lua\""
+		}
+	filter "system:linux"
+		postbuildcommands {
+			"./bin/Linux/premake5 %{_ACTION} --file=\"%{wks.location}/premake5.lua\""
+		}

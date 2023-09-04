@@ -7,7 +7,6 @@ workspace "Ray"
 		"Release"
 	}
 
-
 	flags {
 		"MultiProcessorCompile"
 	}
